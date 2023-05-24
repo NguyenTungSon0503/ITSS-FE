@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-function App() {
+import "./App.css";
+import {Login} from './components/login';
+import Register from './components/register';
+import ShowToken from "./components/showToken";
+import { Cookies } from "react-cookie";
+import GetUser from "./components/get_user";
+const cookies = new Cookies()
+const accessToken = cookies.get("accessToken");
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/show_token" element={<ShowToken accessToken={accessToken} />} />
+        <Route path="/get_user" element={<GetUser />} />
+        </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

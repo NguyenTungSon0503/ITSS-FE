@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 
 function Register() {
   const [data, setData] = useState([]);
@@ -20,7 +22,7 @@ function Register() {
         setData([...data, response.data]);
         console.log(response.data);
         setFormData({});
-        navigate('/login')
+        navigate("/login");
       })
       .catch((error) => {
         console.error(error);
@@ -29,8 +31,16 @@ function Register() {
 
   const handleButton = (event) => {
     event.preventDefault();
-    navigate('/login')
-  }
+    navigate("/login");
+  };
+
+  //react-select role
+
+  const [role, setRole] = useState("");
+
+  const handleChange = (e) => {
+    setRole(e.target.value);
+  };
 
   return (
     <div>
@@ -53,6 +63,21 @@ function Register() {
             onChange={handleInputChange}
           />
         </div>
+      {/* select role */}
+      <FormControl style={{ width: "10%" }} fullWidth>
+        <InputLabel id="demo-simple-select-label">Role</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={role}
+          label="Roleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          onChange={handleChange}
+        >
+          <MenuItem value={"vietnamese"}>Vietnamese</MenuItem>
+          <MenuItem value={"japanese"}>Japanese</MenuItem>
+        </Select>
+        </FormControl>
+
         <div>
           <label>Password:</label>
           <input
@@ -63,7 +88,9 @@ function Register() {
           />
         </div>
         <button type="submit">Register</button>
-        <button type="button" onClick={handleButton}>Login</button>
+        <button type="button" onClick={handleButton}>
+          Login
+        </button>
       </form>
     </div>
   );

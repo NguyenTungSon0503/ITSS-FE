@@ -7,11 +7,14 @@ import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 function Register() {
   const [data, setData] = useState([]);
   const [formData, setFormData] = useState({});
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    setRole(event.target.value);
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
   const handleSubmit = (event) => {
@@ -36,12 +39,6 @@ function Register() {
 
   //react-select role
 
-  const [role, setRole] = useState("");
-
-  const handleChange = (e) => {
-    setRole(e.target.value);
-  };
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -63,19 +60,21 @@ function Register() {
             onChange={handleInputChange}
           />
         </div>
-      {/* select role */}
-      <FormControl style={{ width: "10%" }} fullWidth>
-        <InputLabel id="demo-simple-select-label">Role</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={role}
-          label="Roleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-          onChange={handleChange}
-        >
-          <MenuItem value={"vietnamese"}>Vietnamese</MenuItem>
-          <MenuItem value={"japanese"}>Japanese</MenuItem>
-        </Select>
+        {/* select role */}
+        <FormControl style={{ width: "10%" }} fullWidth>
+          <InputLabel id="demo-simple-select-label">Role</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            name="role"
+            value={role}
+            label="Roleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            onChange={handleInputChange}
+          >
+            {/* change value */}
+            <MenuItem value={"partner"}>Vietnamese</MenuItem>
+            <MenuItem value={"user"}>Japanese</MenuItem>
+          </Select>
         </FormControl>
 
         <div>

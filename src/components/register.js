@@ -1,93 +1,98 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 
 function Register() {
-  const [data, setData] = useState([]);
-  const [formData, setFormData] = useState({});
-  const [role, setRole] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    role: "",
+    password: "",
+    confirmPassword: "",
+  });
   const navigate = useNavigate();
 
-  const handleInputChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    setRole(event.target.value);
     setFormData({ ...formData, [name]: value });
-    console.log(formData);
   };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:5000/api/users", formData)
-      .then((response) => {
-        setData([...data, response.data]);
-        console.log(response.data);
-        setFormData({});
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (formData.confirmPassword !== formData.password) {
+      alert("Password and confirm password must be the same");
+      return;
+    }
+    try {
+      console.log(formData)
+      const response = await axios.post(
+        "http://localhost:5000/api/users",
+        formData
+      );
+      console.log(response.data);
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  const handleButton = (event) => {
-    event.preventDefault();
-    navigate("/login");
-  };
-
-  //react-select role
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
+          <label htmlFor="name">Name:</label>
           <input
             type="text"
+            id="name"
             name="name"
-            value={formData.name || ""}
-            onChange={handleInputChange}
+            value={formData.name}
+            onChange={handleChange}
           />
         </div>
         <div>
-          <label>Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="text"
+            id="email"
             name="email"
-            value={formData.email || ""}
-            onChange={handleInputChange}
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
-        {/* select role */}
         <FormControl style={{ width: "10%" }} fullWidth>
-          <InputLabel id="demo-simple-select-label">Role</InputLabel>
+          <InputLabel id="role-label">Role</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="role-label"
             name="role"
-            value={role}
-            label="Roleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-            onChange={handleInputChange}
+            value={formData.role}
+            onChange={handleChange}
           >
-            {/* change value */}
-            <MenuItem value={"partner"}>Vietnamese</MenuItem>
-            <MenuItem value={"user"}>Japanese</MenuItem>
+            <MenuItem value="partner">Vietnamese</MenuItem>
+            <MenuItem value="user">Japanese</MenuItem>
           </Select>
         </FormControl>
-
         <div>
-          <label>Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
             type="password"
+            id="password"
             name="password"
-            value={formData.password || ""}
-            onChange={handleInputChange}
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
           />
         </div>
         <button type="submit">Register</button>
-        <button type="button" onClick={handleButton}>
+        <button type="button" onClick={() => navigate("/login")}>
           Login
         </button>
       </form>

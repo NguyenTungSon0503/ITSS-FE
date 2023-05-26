@@ -9,17 +9,28 @@ function Register() {
     email: "",
     role: "",
     password: "",
-    confirmPassword: "",
+    // confirmPassword: "",
   });
+
+  const [confirmPassword,setConfirmPassword] = useState('');
+
+  
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const handleInputChange = (event) => {
+    setConfirmPassword(event.target.value);
+    console.log(event.target.value)
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (formData.confirmPassword !== formData.password) {
+    if (confirmPassword !== formData.password) {
       alert("Password and confirm password must be the same");
       return;
     }
@@ -87,8 +98,8 @@ function Register() {
             type="password"
             id="confirmPassword"
             name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
+            value={confirmPassword}
+            onChange={handleInputChange}
           />
         </div>
         <button type="submit">Register</button>

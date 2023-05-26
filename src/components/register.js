@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 
 function Register() {
   const [data, setData] = useState([]);
   const [formData, setFormData] = useState({});
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    setRole(event.target.value);
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
   const handleSubmit = (event) => {
@@ -20,7 +25,7 @@ function Register() {
         setData([...data, response.data]);
         console.log(response.data);
         setFormData({});
-        navigate('/login')
+        navigate("/login");
       })
       .catch((error) => {
         console.error(error);
@@ -29,8 +34,10 @@ function Register() {
 
   const handleButton = (event) => {
     event.preventDefault();
-    navigate('/login')
-  }
+    navigate("/login");
+  };
+
+  //react-select role
 
   return (
     <div>
@@ -53,6 +60,23 @@ function Register() {
             onChange={handleInputChange}
           />
         </div>
+        {/* select role */}
+        <FormControl style={{ width: "10%" }} fullWidth>
+          <InputLabel id="demo-simple-select-label">Role</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            name="role"
+            value={role}
+            label="Roleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            onChange={handleInputChange}
+          >
+            {/* change value */}
+            <MenuItem value={"partner"}>Vietnamese</MenuItem>
+            <MenuItem value={"user"}>Japanese</MenuItem>
+          </Select>
+        </FormControl>
+
         <div>
           <label>Password:</label>
           <input
@@ -63,7 +87,9 @@ function Register() {
           />
         </div>
         <button type="submit">Register</button>
-        <button type="button" onClick={handleButton}>Login</button>
+        <button type="button" onClick={handleButton}>
+          Login
+        </button>
       </form>
     </div>
   );

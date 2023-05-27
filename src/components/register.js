@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import CustomAlert from "./alert";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -12,9 +13,13 @@ function Register() {
     // confirmPassword: "",
   });
 
-  const [confirmPassword,setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  
+  const [alert, setAlert] = useState({
+    open: false,
+    message: " ",
+    type: "success",
+  }); // initialize state for CustomAlert
 
   const navigate = useNavigate();
 
@@ -25,17 +30,37 @@ function Register() {
 
   const handleInputChange = (event) => {
     setConfirmPassword(event.target.value);
-    console.log(event.target.value)
-  }
+    console.log(event.target.value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (confirmPassword !== formData.password) {
-      alert("Password and confirm password must be the same");
-      return;
+    if (confirmPassword !== "" && formData.password !== "") {
+      if (confirmPassword !== formData.password) {
+        // alert("Password and confirm password must be the same");
+        setAlert({
+          open: true,
+          message: "Password and confirm password must be the same",
+          type: "error",
+        });
+        return;
+      } else {
+        setAlert({
+          open: true,
+          message: "Sign up successfully",
+          type: "success",
+        });
+      }
+    } else {
+      setAlert({
+        open: true,
+        message: "Please fill in the blank",
+        type: "error",
+      })
     }
+
     try {
-      console.log(formData)
+      console.log(formData);
       const response = await axios.post(
         "http://localhost:5000/api/users",
         formData
@@ -49,6 +74,7 @@ function Register() {
 
   return (
     <div>
+      <CustomAlert alertData={alert} />
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Name:</label>

@@ -35,28 +35,51 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (confirmPassword !== "" && formData.password !== "") {
-      if (confirmPassword !== formData.password) {
-        // alert("Password and confirm password must be the same");
-        setAlert({
-          open: true,
-          message: "Password and confirm password must be the same",
-          type: "error",
-        });
-        return;
-      } else {
-        setAlert({
-          open: true,
-          message: "Sign up successfully",
-          type: "success",
-        });
-      }
-    } else {
+    // if (confirmPassword !== "" && formData.password !== "") {
+    //   if (confirmPassword !== formData.password) {
+    //     // alert("Password and confirm password must be the same");
+    //     setAlert({
+    //       open: true,
+    //       message: "Password and confirm password must be the same",
+    //       type: "error",
+    //     });
+    //     return;
+    //   } else {
+    //     setAlert({
+    //       open: true,
+    //       message: "Sign up successfully",
+    //       type: "success",
+    //     });
+    //   }
+    // } else {
+    //   setAlert({
+    //     open: true,
+    //     message: "Please fill in the blanks",
+    //     type: "error",
+    //   })
+    // }
+
+    if ( !(formData.name && formData.email && formData.role && formData.password) ) {
       setAlert({
         open: true,
-        message: "Please fill in the blank",
+        message: "Please fill all the Fields",
         type: "error",
-      })
+      });
+      return;
+    } else if ( confirmPassword !== formData.password ) {
+      setAlert({
+        open: true,
+        message: "Password and confirm password must be the same",
+        type: "error",
+      });
+    } 
+    //testing (should be deleted lately)
+    else {
+      setAlert({
+        open: true,
+        message: "Sign up successfully",
+        type: "success",
+      });
     }
 
     try {
@@ -66,9 +89,19 @@ function Register() {
         formData
       );
       console.log(response.data);
+      setAlert({
+        open: true,
+        message: "Sign up successfully",
+        type: "success",
+      });
       navigate("/login");
     } catch (error) {
       console.error(error);
+      setAlert({
+        open: true,
+        message: error.message,
+        type: "error",
+      });
     }
   };
 

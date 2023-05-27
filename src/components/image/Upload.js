@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Alert from "./Alert";
 import axios from "axios";
+import { withAuth } from "../login";
 
-export default function Upload() {
+const Upload = withAuth((props) => {
   const [fileInputState, setFileInputState] = useState("");
   const [previewSource, setPreviewSource] = useState("");
   const [selectedFile, setSelectedFile] = useState();
@@ -43,7 +44,13 @@ export default function Upload() {
       await axios.post(
         "http://localhost:5000/api/images",
         { data: base64EncodedImage },
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${props.accessToken}`,
+          },
+          withCredentials: true,
+        }
       );
       setFileInputState("");
       setPreviewSource("");
@@ -76,4 +83,5 @@ export default function Upload() {
       )}
     </div>
   );
-}
+});
+export default Upload;

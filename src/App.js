@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./App.css";
-import {Login} from './components/login';
-import Register from './components/register';
-import ShowToken from "./components/showToken";
+import {Login} from './components/authentication/login';
+import Register from './components/authentication/register';
+import ShowToken from "./components/authentication/showToken";
 import { Cookies } from "react-cookie";
-import GetUser from "./components/get_user";
+import GetUser from "./components/authentication/get_user";
 import Upload from './components/image/Upload';
 import Home from './components/image/Home';
 const cookies = new Cookies()

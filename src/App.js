@@ -10,6 +10,7 @@ import GetUser from "./components/authentication/get_user";
 import Upload from './components/image/Upload';
 import Home from './components/image/Home';
 import Offer from "./components/offer/offer";
+
 const cookies = new Cookies()
 const accessToken = cookies.get("accessToken");
 const App = () => {

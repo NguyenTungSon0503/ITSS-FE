@@ -1,26 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Button,
+  TextField,
+  Typography,
+} from "@mui/material";
 import TestDate from "./date";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { withAuth } from "../authentication/login";
+import DateMUI from "./dateMUI";
+
 const Offer = withAuth((props) => {
   const [formData, setFormData] = useState({
     hour_start: "",
     hour_end: "",
+    date: "",
     sex: "",
     age: "",
     meal_price: "",
     location: "",
     note: "",
-    // confirmPassword: "",
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-    console.log(typeof formData.hour_start);
+    // console.log(typeof formData.hour_start);
   };
+
   console.log(formData);
 
   const navigate = useNavigate();
@@ -43,58 +54,84 @@ const Offer = withAuth((props) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Hours:</label>
-          <label>from</label>
-          <input
-            type="time"
-            name="hour_start"
-            value={formData.hour_start}
-            onChange={handleInputChange}
-          />
-          <label>to</label>
-          <input
-            type="time"
-            name="hour_end"
-            value={formData.hour_end}
-            onChange={handleInputChange}
-          />
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "80vh",
+
+      }}
+    >
+      <div style={{ width: "70%", marginTop: "5%"}}>
+        {/* <form onSubmit={handleSubmit}> */}
+        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
+            <Typography>Hours:</Typography>
+            <Typography>from</Typography>
+            <TextField
+              variant="standard"
+              type="time"
+              name="hour_start"
+              value={formData.hour_start}
+              onChange={handleInputChange}
+            />
+            <Typography>to</Typography>
+            <TextField
+              variant="standard"
+              type="time"
+              name="hour_end"
+              value={formData.hour_end}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
+            <Typography>Date</Typography>
+            {/* <TestDate /> */}
+            <DateMUI
+              name="date"
+              value={formData.date}
+              onDateChange={handleInputChange}
+            />
+          </div>
         </div>
 
-        <div>
-          Date
-          <TestDate />
+        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap"  }}>
+          <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
+            <FormControl style={{ width: "10%" }}>
+              <Typography>Sex</Typography>
+            </FormControl>
+            <FormControl variant="standard" style={{ width: "30%" }}>
+              <Select
+                labelId="sex-label"
+                name="sex"
+                value={formData.sex}
+                onChange={handleInputChange}
+              >
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
+            <Typography>Age:</Typography>
+            <TextField
+              variant="standard"
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
 
-        <FormControl style={{ width: "10%" }} fullWidth>
-          <InputLabel id="sex-label">Sex</InputLabel>
-          <Select
-            labelId="sex-label"
-            name="sex"
-            value={formData.sex}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-            <MenuItem value="other">Other</MenuItem>
-          </Select>
-        </FormControl>
-
-        <div>
-          <label>Age:</label>
-          <input
-            type="number"
-            name="age"
-            value={formData.age}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label>Meal Price:</label>
-          <input
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Typography>Meal Price:</Typography>
+          <TextField
+            variant="standard"
             type="number"
             name="meal_price"
             value={formData.meal_price}
@@ -102,9 +139,10 @@ const Offer = withAuth((props) => {
           />
         </div>
 
-        <div>
-          <label>Location:</label>
-          <input
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Typography>Location:</Typography>
+          <TextField
+            variant="standard"
             type="text"
             name="location"
             value={formData.location}
@@ -112,9 +150,10 @@ const Offer = withAuth((props) => {
           />
         </div>
 
-        <div>
-          <label>Note:</label>
-          <input
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Typography>Note:</Typography>
+          <TextField
+            variant="standard"
             type="text"
             name="note"
             value={formData.note}
@@ -122,9 +161,25 @@ const Offer = withAuth((props) => {
           />
         </div>
 
-        <button type="submit">Send</button>
-      </form>
-      <button onClick={() => navigate("/home")}>Cancel</button>
+        {/* <button type="submit">Send</button> */}
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          style={{ backgroundColor: "#FA7015"}}
+        >
+          Send
+        </Button>
+
+        <Button
+          variant="outlined"
+          onClick={() => navigate("/home")}
+          style={{ borderColor: "#FA7015", color: "#FA7015"}}
+        >
+          Cancel
+        </Button>
+        </div>
+      </div>
     </div>
   );
 });

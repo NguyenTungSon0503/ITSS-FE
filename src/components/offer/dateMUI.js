@@ -7,8 +7,11 @@ import { getTodayDate } from "@mui/x-date-pickers/internals";
 
 const DateMUI = ({ name, value, onDateChange }) => {
     const handleDateChange = (date) => {
-      onDateChange({ target: { name, value: date.format('YYYY-MM-DD') } });
+      //save value as ISOString
+      // console.log(date.$d.toISOString());
+      onDateChange({ target: { name, value: date.$d.toISOString() } });
     };
+    // console.log(value);
   
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>

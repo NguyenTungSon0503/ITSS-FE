@@ -32,7 +32,7 @@ const Offer = withAuth((props) => {
     // console.log(typeof formData.hour_start);
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   const navigate = useNavigate();
   const handleSubmit = async () => {
@@ -60,15 +60,22 @@ const Offer = withAuth((props) => {
         alignItems: "center",
         justifyContent: "center",
         height: "80vh",
-
       }}
     >
-      <div style={{ width: "70%", marginTop: "5%"}}>
+      <div style={{ width: "70%", marginTop: "5%" }}>
         {/* <form onSubmit={handleSubmit}> */}
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <Typography>Hours:</Typography>
-            <Typography>from</Typography>
+            <Typography>
+              Hours: <br />
+            </Typography>
+            <Typography>from  <br /></Typography>
             <TextField
               variant="standard"
               type="time"
@@ -97,7 +104,13 @@ const Offer = withAuth((props) => {
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap"  }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
             <FormControl style={{ width: "10%" }}>
               <Typography>Sex</Typography>
@@ -162,22 +175,22 @@ const Offer = withAuth((props) => {
         </div>
 
         {/* <button type="submit">Send</button> */}
-        <div style={{display: "flex", justifyContent: "space-between"}}>
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          style={{ backgroundColor: "#FA7015"}}
-        >
-          Send
-        </Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            style={{ backgroundColor: "#FA7015" }}
+          >
+            Send
+          </Button>
 
-        <Button
-          variant="outlined"
-          onClick={() => navigate("/home")}
-          style={{ borderColor: "#FA7015", color: "#FA7015"}}
-        >
-          Cancel
-        </Button>
+          <Button
+            variant="outlined"
+            onClick={() => navigate("/home")}
+            style={{ borderColor: "#FA7015", color: "#FA7015" }}
+          >
+            Cancel
+          </Button>
         </div>
       </div>
     </div>

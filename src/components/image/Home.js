@@ -25,7 +25,7 @@ const Home = withAuth((props) => {
   }, []);
   return (
     <div>
-      <h1 className="title">Cloudinary Gallery</h1>
+      <h1 className="title">Avatar</h1>
       <div className="gallery">
         <Image
           // cloudName = process.env.CLOUDINARY_NAME backend
@@ -36,7 +36,7 @@ const Home = withAuth((props) => {
         />
       </div>
       {/* <TestEmoji /> */}
-      <TestDate />
+      {/* <TestDate /> */}
     </div>
   );
 });

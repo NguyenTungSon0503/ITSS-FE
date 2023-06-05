@@ -10,6 +10,8 @@ import GetUser from "./components/authentication/get_user";
 import Upload from './components/image/Upload';
 import Home from './components/image/Home';
 import Offer from "./components/offer/offer";
+import GetOffer from "./components/offer/get_offer(partner)";
+import GetOfferUser from "./components/offer/get_offer(user)";
 
 const cookies = new Cookies()
 const accessToken = cookies.get("accessToken");
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/upload" element={<Upload />} />
         <Route path="/home" element={<Home />} />
         <Route path="/offer" element={<Offer   />} />
+        <Route path="/partner_offer" element={<GetOffer   />} />
+        <Route path="/user_offer" element={<GetOfferUser   />} />
         </Routes>
     </BrowserRouter>
   );

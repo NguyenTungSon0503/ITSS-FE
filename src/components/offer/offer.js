@@ -56,14 +56,13 @@ const Offer = withAuth((props) => {
   };
 
   return (
-    <div style={{width: "100%", }} >
-      <Box mt={5}>
+    <div style={{width: "100%", backgroundColor: "#DDDDDD"}} >
+      <Box paddingLeft={"5%"} paddingRight={"5%"} paddingTop={5}>
         <Typography variant="h5" paddingLeft={5}  paddingTop={3}>Make Offer</Typography>
         <Stack direction='row' justifyContent='space-between' paddingLeft={5} paddingRight={5} flexWrap='wrap'>
           <Box flex={1}>
-            <Typography variant="h6">Hours:</Typography>
+            <Typography variant="h6" paddingTop={"2%"}>Hours:</Typography>
             <Stack direction='row'>
-            <Typography>from</Typography>
             <TextField
               variant="standard"
               type="time"
@@ -71,7 +70,7 @@ const Offer = withAuth((props) => {
               value={formData.hour_start}
               onChange={handleInputChange}
             />
-            <Typography>to</Typography>
+            <Typography paddingLeft={2} paddingRight={2} paddingTop={1} fontWeight={700} fontSize={20}>まで</Typography>
             <TextField
               variant="standard"
               type="time"
@@ -96,7 +95,7 @@ const Offer = withAuth((props) => {
         <Typography variant="h5" paddingLeft={5} paddingTop={3}>Request</Typography>
         <Stack direction='row' justifyContent='space-between' paddingLeft={5} paddingRight={5} >
           <Box flex={1}>
-            <Typography variant="h6">Sex</Typography>
+            <Typography variant="h6" paddingTop={"5%"}>Sex</Typography>
               <Select
                 variant="standard"
                 labelId="sex-label"
@@ -135,7 +134,7 @@ const Offer = withAuth((props) => {
           />
         </Box>
 
-        <Box padding={5} paddingTop={2}>
+        <Box padding={5} paddingTop={1}>
           <Typography>Location:</Typography>
           <TextField
             fullWidth
@@ -147,7 +146,7 @@ const Offer = withAuth((props) => {
           />
         </Box>
 
-        <Box padding={5} paddingTop={2}>
+        <Box padding={5} paddingTop={"0.5%"}>
           <Typography>Note:</Typography>
           <TextField
             fullWidth
@@ -160,7 +159,7 @@ const Offer = withAuth((props) => {
         </Box>
 
         {/* <button type="submit">Send</button> */}
-        <Stack direction='row' justifyContent='space-around' >
+        <Stack direction='row' justifyContent='space-around' paddingBottom={8}>
         <Button
           variant="contained"
           onClick={handleSubmit}

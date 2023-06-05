@@ -7,12 +7,14 @@ import {
   Button,
   TextField,
   Typography,
+  Box,
 } from "@mui/material";
 import TestDate from "./date";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { withAuth } from "../authentication/login";
 import DateMUI from "./dateMUI";
+import Stack from "@mui/material/Stack";
 
 const Offer = withAuth((props) => {
   const [formData, setFormData] = useState({
@@ -54,20 +56,13 @@ const Offer = withAuth((props) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "80vh",
-
-      }}
-    >
-      <div style={{ width: "70%", marginTop: "5%"}}>
-        {/* <form onSubmit={handleSubmit}> */}
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-          <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <Typography>Hours:</Typography>
+    <div style={{width: "100%", }} >
+      <Box mt={5}>
+        <Typography variant="h5" paddingLeft={5}  paddingTop={3}>Make Offer</Typography>
+        <Stack direction='row' justifyContent='space-between' paddingLeft={5} paddingRight={5} flexWrap='wrap'>
+          <Box flex={1}>
+            <Typography variant="h6">Hours:</Typography>
+            <Stack direction='row'>
             <Typography>from</Typography>
             <TextField
               variant="standard"
@@ -84,40 +79,40 @@ const Offer = withAuth((props) => {
               value={formData.hour_end}
               onChange={handleInputChange}
             />
-          </div>
+            </Stack>
+          </Box>
 
-          <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <Typography>Date</Typography>
+          <Box flex={1} sx={{minWidth: "50%"}}>
+            <Typography variant="h6">Date</Typography>
             {/* <TestDate /> */}
             <DateMUI
               name="date"
               value={formData.date}
               onDateChange={handleInputChange}
             />
-          </div>
-        </div>
+          </Box>
+        </Stack>
 
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap"  }}>
-          <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <FormControl style={{ width: "10%" }}>
-              <Typography>Sex</Typography>
-            </FormControl>
-            <FormControl variant="standard" style={{ width: "30%" }}>
+        <Typography variant="h5" paddingLeft={5} paddingTop={3}>Request</Typography>
+        <Stack direction='row' justifyContent='space-between' paddingLeft={5} paddingRight={5} >
+          <Box flex={1}>
+            <Typography variant="h6">Sex</Typography>
               <Select
+                variant="standard"
                 labelId="sex-label"
                 name="sex"
                 value={formData.sex}
                 onChange={handleInputChange}
+                style={{minWidth: "50%"}}
               >
                 <MenuItem value="male">Male</MenuItem>
                 <MenuItem value="female">Female</MenuItem>
                 <MenuItem value="other">Other</MenuItem>
               </Select>
-            </FormControl>
-          </div>
+          </Box>
 
-          <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <Typography>Age:</Typography>
+          <Box flex={1} >
+            <Typography variant="h6">Age:</Typography>
             <TextField
               variant="standard"
               type="number"
@@ -125,48 +120,52 @@ const Offer = withAuth((props) => {
               value={formData.age}
               onChange={handleInputChange}
             />
-          </div>
-        </div>
+          </Box>
+        </Stack>
 
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <Box flex={1} padding={5} paddingTop={2}>
           <Typography>Meal Price:</Typography>
           <TextField
+            fullWidth
             variant="standard"
             type="number"
             name="meal_price"
             value={formData.meal_price}
             onChange={handleInputChange}
           />
-        </div>
+        </Box>
 
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <Box padding={5} paddingTop={2}>
           <Typography>Location:</Typography>
           <TextField
+            fullWidth
             variant="standard"
             type="text"
             name="location"
             value={formData.location}
             onChange={handleInputChange}
           />
-        </div>
+        </Box>
 
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <Box padding={5} paddingTop={2}>
           <Typography>Note:</Typography>
           <TextField
+            fullWidth
             variant="standard"
             type="text"
             name="note"
             value={formData.note}
             onChange={handleInputChange}
           />
-        </div>
+        </Box>
 
         {/* <button type="submit">Send</button> */}
-        <div style={{display: "flex", justifyContent: "space-between"}}>
+        <Stack direction='row' justifyContent='space-around' >
         <Button
           variant="contained"
           onClick={handleSubmit}
-          style={{ backgroundColor: "#FA7015"}}
+          style={{ backgroundColor: "#FA7015", width: "20%", minWidth: 100}}
+          size="large"
         >
           Send
         </Button>
@@ -174,12 +173,13 @@ const Offer = withAuth((props) => {
         <Button
           variant="outlined"
           onClick={() => navigate("/home")}
-          style={{ borderColor: "#FA7015", color: "#FA7015"}}
+          style={{ borderColor: "#FA7015", color: "#FA7015", width: "20%", minWidth: 100}}
+          size="large"
         >
           Cancel
         </Button>
-        </div>
-      </div>
+        </Stack>
+      </Box>
     </div>
   );
 });

@@ -26,7 +26,7 @@ const Offer = withAuth((props) => {
     location: "",
     note: "",
   });
-
+console.log(formData);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -34,6 +34,41 @@ const Offer = withAuth((props) => {
   };
 
   const navigate = useNavigate();
+  const handleCancelButton = (event) => {
+    if (
+      formData.hour_start === "" &&
+      formData.hour_end === "" &&
+      formData.date === "" &&
+      formData.sex === "" &&
+      formData.age === "" &&
+      formData.meal_price === "" &&
+      formData.location === "" &&
+      formData.note === ""
+    ) {
+      setFormData({
+        hour_start: "",
+        hour_end: "",
+        date: "",
+        sex: "",
+        age: "",
+        meal_price: "",
+        location: "",
+        note: "",
+      });
+    } else {
+      alert("Are you sure you want to cancel");
+      setFormData({
+        hour_start: "",
+        hour_end: "",
+        date: "",
+        sex: "",
+        age: "",
+        meal_price: "",
+        location: "",
+        note: "",
+      });
+    }
+  };
   const handleSubmit = async () => {
     if (
       validateTime(formData.hour_start, formData.hour_end) === 1 &&
@@ -178,7 +213,9 @@ const Offer = withAuth((props) => {
           </Box>
 
           <Box flex={1}>
-            <Typography variant="h6" paddingTop={"5%"}>年齢</Typography>
+            <Typography variant="h6" paddingTop={"5%"}>
+              年齢
+            </Typography>
             <TextField
               variant="standard"
               type="number"
@@ -189,7 +226,7 @@ const Offer = withAuth((props) => {
           </Box>
         </Stack>
 
-        <Box flex={1} padding={5} >
+        <Box flex={1} padding={5}>
           <Typography variant="h6">希望食事の費</Typography>
           <TextField
             fullWidth
@@ -238,7 +275,7 @@ const Offer = withAuth((props) => {
 
           <Button
             variant="outlined"
-            onClick={() => navigate("/home")}
+            onClick={handleCancelButton}
             style={{
               borderColor: "#FA7015",
               color: "#FA7015",

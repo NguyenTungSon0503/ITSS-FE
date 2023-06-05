@@ -32,26 +32,66 @@ const Offer = withAuth((props) => {
     // console.log(typeof formData.hour_start);
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   const navigate = useNavigate();
   const handleSubmit = async () => {
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/api/offers",
-        formData,
-        {
-          headers: {
-            authorization: `Bearer ${props.accessToken}`,
-          },
-          withCredentials: true,
-        }
-      );
-      console.log(res.data);
-    } catch (err) {
-      console.error(err);
+    if (validateTime(formData.hour_start, formData.hour_end) === 1 && validateDate(formData.date) === 1) {
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/api/offers",
+          formData,
+          {
+            headers: {
+              authorization: `Bearer ${props.accessToken}`,
+            },
+            withCredentials: true,
+          }
+        );
+        console.log(res.data);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
+  // startTime < endTime
+  // startTime > timeNow
+
+  //handle when startTime > endTime
+  function validateTime(startTime, endTime) {
+    const arrayStart = startTime.split(":");
+    const arrayEnd = endTime.split(":");
+    const startTimeSecond = arrayStart[0] * 3600 + arrayStart[1] * 60;
+    const endTimeSecond = arrayEnd[0] * 3600 + arrayEnd[1] * 60;
+    const timeNow = new Date();
+    const timeNowSecond = parseInt(timeNow.getHours() * 3600) + parseInt(timeNow.getMinutes() * 60);
+    if (startTimeSecond < timeNowSecond) {
+      alert("Start time must be greater than or equal to Time Now");
+      return 0;
+    } else {
+      if (startTimeSecond > endTimeSecond) {
+        alert("End time must be greater than or equal to Start time");
+        return 0;
+      } else {
+        return 1;
+      }
+    }
+  }
+
+  //handle when date > now
+
+  function validateDate(date) {
+    const dateTime = new Date(date);
+    const epochTime = dateTime.getTime();
+    const timeNow = new Date();
+    const epochNow = timeNow.getTime();
+    if (epochTime < epochNow) {
+      alert("Date should be greater or equal to Today");
+      return 0;
+    } else {
+      return 1;
+    }
+  }
 
   return (
     <div
@@ -60,12 +100,17 @@ const Offer = withAuth((props) => {
         alignItems: "center",
         justifyContent: "center",
         height: "80vh",
-
       }}
     >
-      <div style={{ width: "70%", marginTop: "5%"}}>
+      <div style={{ width: "70%", marginTop: "5%" }}>
         {/* <form onSubmit={handleSubmit}> */}
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
             <Typography>Hours:</Typography>
             <Typography>from</Typography>
@@ -97,7 +142,13 @@ const Offer = withAuth((props) => {
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap"  }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", flex: 1 }}>
             <FormControl style={{ width: "10%" }}>
               <Typography>Sex</Typography>
@@ -162,22 +213,22 @@ const Offer = withAuth((props) => {
         </div>
 
         {/* <button type="submit">Send</button> */}
-        <div style={{display: "flex", justifyContent: "space-between"}}>
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          style={{ backgroundColor: "#FA7015"}}
-        >
-          Send
-        </Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            style={{ backgroundColor: "#FA7015" }}
+          >
+            Send
+          </Button>
 
-        <Button
-          variant="outlined"
-          onClick={() => navigate("/home")}
-          style={{ borderColor: "#FA7015", color: "#FA7015"}}
-        >
-          Cancel
-        </Button>
+          <Button
+            variant="outlined"
+            onClick={() => navigate("/home")}
+            style={{ borderColor: "#FA7015", color: "#FA7015" }}
+          >
+            Cancel
+          </Button>
         </div>
       </div>
     </div>

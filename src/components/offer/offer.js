@@ -38,50 +38,111 @@ const Offer = withAuth((props) => {
 
   const navigate = useNavigate();
   const handleSubmit = async () => {
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/api/offers",
-        formData,
-        {
-          headers: {
-            authorization: `Bearer ${props.accessToken}`,
-          },
-          withCredentials: true,
-        }
-      );
-      console.log(res.data);
-    } catch (err) {
-      console.error(err);
+    if (
+      validateTime(formData.hour_start, formData.hour_end) === 1 &&
+      validateDate(formData.date) === 1
+    ) {
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/api/offers",
+          formData,
+          {
+            headers: {
+              authorization: `Bearer ${props.accessToken}`,
+            },
+            withCredentials: true,
+          }
+        );
+        console.log(res.data);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
+  // startTime < endTime
+  // startTime > timeNow
 
+  //handle when startTime > endTime
+  function validateTime(startTime, endTime) {
+    const arrayStart = startTime.split(":");
+    const arrayEnd = endTime.split(":");
+    const startTimeSecond = arrayStart[0] * 3600 + arrayStart[1] * 60;
+    const endTimeSecond = arrayEnd[0] * 3600 + arrayEnd[1] * 60;
+    const timeNow = new Date();
+    const timeNowSecond =
+      parseInt(timeNow.getHours() * 3600) + parseInt(timeNow.getMinutes() * 60);
+    if (startTimeSecond < timeNowSecond) {
+      alert("Start time must be greater than or equal to Time Now");
+      return 0;
+    } else {
+      if (startTimeSecond > endTimeSecond) {
+        alert("End time must be greater than or equal to Start time");
+        return 0;
+      } else {
+        return 1;
+      }
+    }
+  }
+
+  //handle when date > now
+
+  function validateDate(date) {
+    const dateTime = new Date(date);
+    const epochTime = dateTime.getTime();
+    const timeNow = new Date();
+    const epochNow = timeNow.getTime();
+    if (epochTime < epochNow) {
+      alert("Date should be greater or equal to Today");
+      return 0;
+    } else {
+      return 1;
+    }
+  }
   return (
-    <div style={{width: "100%", backgroundColor: "#DDDDDD"}} >
+    <div style={{ width: "100%", backgroundColor: "#DDDDDD" }}>
       <Box paddingLeft={"5%"} paddingRight={"5%"} paddingTop={5}>
-        <Typography variant="h5" paddingLeft={5}  paddingTop={3}>Make Offer</Typography>
-        <Stack direction='row' justifyContent='space-between' paddingLeft={5} paddingRight={5} flexWrap='wrap'>
+        <Typography variant="h5" paddingLeft={5} paddingTop={3}>
+          Make Offer
+        </Typography>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          paddingLeft={5}
+          paddingRight={5}
+          flexWrap="wrap"
+        >
           <Box flex={1}>
-            <Typography variant="h6" paddingTop={"2%"}>Hours:</Typography>
-            <Stack direction='row'>
-            <TextField
-              variant="standard"
-              type="time"
-              name="hour_start"
-              value={formData.hour_start}
-              onChange={handleInputChange}
-            />
-            <Typography paddingLeft={2} paddingRight={2} paddingTop={1} fontWeight={700} fontSize={20}>まで</Typography>
-            <TextField
-              variant="standard"
-              type="time"
-              name="hour_end"
-              value={formData.hour_end}
-              onChange={handleInputChange}
-            />
+            <Typography variant="h6" paddingTop={"2%"}>
+              Hours:
+            </Typography>
+            <Stack direction="row">
+              <TextField
+                variant="standard"
+                type="time"
+                name="hour_start"
+                value={formData.hour_start}
+                onChange={handleInputChange}
+              />
+              <Typography
+                paddingLeft={2}
+                paddingRight={2}
+                paddingTop={1}
+                fontWeight={700}
+                fontSize={20}
+              >
+                まで
+              </Typography>
+              <TextField
+                variant="standard"
+                type="time"
+                name="hour_end"
+                value={formData.hour_end}
+                onChange={handleInputChange}
+              />
             </Stack>
           </Box>
 
-          <Box flex={1} sx={{minWidth: "50%"}}>
+          <Box flex={1} sx={{ minWidth: "50%" }}>
             <Typography variant="h6">Date</Typography>
             {/* <TestDate /> */}
             <DateMUI
@@ -92,25 +153,34 @@ const Offer = withAuth((props) => {
           </Box>
         </Stack>
 
-        <Typography variant="h5" paddingLeft={5} paddingTop={3}>Request</Typography>
-        <Stack direction='row' justifyContent='space-between' paddingLeft={5} paddingRight={5} >
+        <Typography variant="h5" paddingLeft={5} paddingTop={3}>
+          Request
+        </Typography>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          paddingLeft={5}
+          paddingRight={5}
+        >
           <Box flex={1}>
-            <Typography variant="h6" paddingTop={"5%"}>Sex</Typography>
-              <Select
-                variant="standard"
-                labelId="sex-label"
-                name="sex"
-                value={formData.sex}
-                onChange={handleInputChange}
-                style={{minWidth: "50%"}}
-              >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </Select>
+            <Typography variant="h6" paddingTop={"5%"}>
+              Sex
+            </Typography>
+            <Select
+              variant="standard"
+              labelId="sex-label"
+              name="sex"
+              value={formData.sex}
+              onChange={handleInputChange}
+              style={{ minWidth: "50%" }}
+            >
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
+            </Select>
           </Box>
 
-          <Box flex={1} >
+          <Box flex={1}>
             <Typography variant="h6">Age:</Typography>
             <TextField
               variant="standard"
@@ -159,24 +229,29 @@ const Offer = withAuth((props) => {
         </Box>
 
         {/* <button type="submit">Send</button> */}
-        <Stack direction='row' justifyContent='space-around' paddingBottom={8}>
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          style={{ backgroundColor: "#FA7015", width: "20%", minWidth: 100}}
-          size="large"
-        >
-          Send
-        </Button>
+        <Stack direction="row" justifyContent="space-around" paddingBottom={8}>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            style={{ backgroundColor: "#FA7015", width: "20%", minWidth: 100 }}
+            size="large"
+          >
+            Send
+          </Button>
 
-        <Button
-          variant="outlined"
-          onClick={() => navigate("/home")}
-          style={{ borderColor: "#FA7015", color: "#FA7015", width: "20%", minWidth: 100}}
-          size="large"
-        >
-          Cancel
-        </Button>
+          <Button
+            variant="outlined"
+            onClick={() => navigate("/home")}
+            style={{
+              borderColor: "#FA7015",
+              color: "#FA7015",
+              width: "20%",
+              minWidth: 100,
+            }}
+            size="large"
+          >
+            Cancel
+          </Button>
         </Stack>
       </Box>
     </div>

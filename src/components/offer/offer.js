@@ -9,8 +9,6 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import TestDate from "./date";
-import { useNavigate } from "react-router";
 import axios from "axios";
 import { withAuth } from "../authentication/login";
 import DateMUI from "./dateMUI";
@@ -27,16 +25,48 @@ const Offer = withAuth((props) => {
     location: "",
     note: "",
   });
-
+  // console.log(formData);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
     // console.log(typeof formData.hour_start);
   };
 
-  console.log(formData);
-
-  const navigate = useNavigate();
+  const handleCancelButton = (event) => {
+    if (
+      formData.hour_start === "" &&
+      formData.hour_end === "" &&
+      formData.date === "" &&
+      formData.sex === "" &&
+      formData.age === "" &&
+      formData.meal_price === "" &&
+      formData.location === "" &&
+      formData.note === ""
+    ) {
+      setFormData({
+        hour_start: "",
+        hour_end: "",
+        date: "",
+        sex: "",
+        age: "",
+        meal_price: "",
+        location: "",
+        note: "",
+      });
+    } else {
+      alert("Are you sure you want to cancel");
+      setFormData({
+        hour_start: "",
+        hour_end: "",
+        date: "",
+        sex: "",
+        age: "",
+        meal_price: "",
+        location: "",
+        note: "",
+      });
+    }
+  };
   const handleSubmit = async () => {
     if (
       validateTime(formData.hour_start, formData.hour_end) === 1 &&
@@ -99,10 +129,10 @@ const Offer = withAuth((props) => {
     }
   }
   return (
-    <div style={{ width: "100%", backgroundColor: "#DDDDDD" }}>
+    <div style={{ width: "100%", backgroundColor: "#FFFFFF" }}>
       <Box paddingLeft={"5%"} paddingRight={"5%"} paddingTop={5}>
-        <Typography variant="h5" paddingLeft={5} paddingTop={3}>
-          Make Offer
+        <Typography variant="h4" paddingLeft={5} paddingTop={3}>
+          オファー作り
         </Typography>
         <Stack
           direction="row"
@@ -113,7 +143,7 @@ const Offer = withAuth((props) => {
         >
           <Box flex={1}>
             <Typography variant="h6" paddingTop={"2%"}>
-              Hours:
+              時間
             </Typography>
             <Stack direction="row">
               <TextField
@@ -130,7 +160,7 @@ const Offer = withAuth((props) => {
                 fontWeight={700}
                 fontSize={20}
               >
-                まで
+                から
               </Typography>
               <TextField
                 variant="standard"
@@ -139,11 +169,20 @@ const Offer = withAuth((props) => {
                 value={formData.hour_end}
                 onChange={handleInputChange}
               />
+              <Typography
+                paddingLeft={2}
+                paddingRight={2}
+                paddingTop={1}
+                fontWeight={700}
+                fontSize={20}
+              >
+                まで
+              </Typography>
             </Stack>
           </Box>
 
           <Box flex={1} sx={{ minWidth: "50%" }}>
-            <Typography variant="h6">Date</Typography>
+            <Typography variant="h6">年月日</Typography>
             {/* <TestDate /> */}
             <DateMUI
               name="date"
@@ -153,8 +192,8 @@ const Offer = withAuth((props) => {
           </Box>
         </Stack>
 
-        <Typography variant="h5" paddingLeft={5} paddingTop={3}>
-          Request
+        <Typography variant="h4" paddingLeft={5} paddingTop={3}>
+          リクエスト
         </Typography>
         <Stack
           direction="row"
@@ -164,7 +203,7 @@ const Offer = withAuth((props) => {
         >
           <Box flex={1}>
             <Typography variant="h6" paddingTop={"5%"}>
-              Sex
+              性別
             </Typography>
             <Select
               variant="standard"
@@ -172,16 +211,18 @@ const Offer = withAuth((props) => {
               name="sex"
               value={formData.sex}
               onChange={handleInputChange}
-              style={{ minWidth: "50%" }}
+              style={{ minWidth: "25%" }}
             >
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
-              <MenuItem value="other">Other</MenuItem>
+              <MenuItem value="male">男性</MenuItem>
+              <MenuItem value="female">女性</MenuItem>
+              <MenuItem value="other">その他</MenuItem>
             </Select>
           </Box>
 
           <Box flex={1}>
-            <Typography variant="h6">Age:</Typography>
+            <Typography variant="h6" paddingTop={"5%"}>
+              年齢
+            </Typography>
             <TextField
               variant="standard"
               type="number"
@@ -192,8 +233,8 @@ const Offer = withAuth((props) => {
           </Box>
         </Stack>
 
-        <Box flex={1} padding={5} paddingTop={2}>
-          <Typography>Meal Price:</Typography>
+        <Box flex={1} padding={5}>
+          <Typography variant="h6">希望食事の費</Typography>
           <TextField
             fullWidth
             variant="standard"
@@ -205,7 +246,7 @@ const Offer = withAuth((props) => {
         </Box>
 
         <Box padding={5} paddingTop={1}>
-          <Typography>Location:</Typography>
+          <Typography variant="h6">希望食事の住所</Typography>
           <TextField
             fullWidth
             variant="standard"
@@ -217,7 +258,7 @@ const Offer = withAuth((props) => {
         </Box>
 
         <Box padding={5} paddingTop={"0.5%"}>
-          <Typography>Note:</Typography>
+          <Typography variant="h6">その他</Typography>
           <TextField
             fullWidth
             variant="standard"
@@ -231,17 +272,8 @@ const Offer = withAuth((props) => {
         {/* <button type="submit">Send</button> */}
         <Stack direction="row" justifyContent="space-around" paddingBottom={8}>
           <Button
-            variant="contained"
-            onClick={handleSubmit}
-            style={{ backgroundColor: "#FA7015", width: "20%", minWidth: 100 }}
-            size="large"
-          >
-            Send
-          </Button>
-
-          <Button
             variant="outlined"
-            onClick={() => navigate("/home")}
+            onClick={handleCancelButton}
             style={{
               borderColor: "#FA7015",
               color: "#FA7015",
@@ -250,7 +282,15 @@ const Offer = withAuth((props) => {
             }}
             size="large"
           >
-            Cancel
+            キャセル
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            style={{ backgroundColor: "#FA7015", width: "20%", minWidth: 100 }}
+            size="large"
+          >
+            送信
           </Button>
         </Stack>
       </Box>

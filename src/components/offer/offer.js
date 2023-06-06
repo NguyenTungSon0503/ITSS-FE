@@ -9,7 +9,6 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { useNavigate } from "react-router";
 import axios from "axios";
 import { withAuth } from "../authentication/login";
 import DateMUI from "./dateMUI";
@@ -26,14 +25,13 @@ const Offer = withAuth((props) => {
     location: "",
     note: "",
   });
-console.log(formData);
+  // console.log(formData);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
     // console.log(typeof formData.hour_start);
   };
 
-  const navigate = useNavigate();
   const handleCancelButton = (event) => {
     if (
       formData.hour_start === "" &&
@@ -162,7 +160,7 @@ console.log(formData);
                 fontWeight={700}
                 fontSize={20}
               >
-                まで
+                から
               </Typography>
               <TextField
                 variant="standard"
@@ -171,6 +169,15 @@ console.log(formData);
                 value={formData.hour_end}
                 onChange={handleInputChange}
               />
+              <Typography
+                paddingLeft={2}
+                paddingRight={2}
+                paddingTop={1}
+                fontWeight={700}
+                fontSize={20}
+              >
+                まで
+              </Typography>
             </Stack>
           </Box>
 
@@ -265,15 +272,6 @@ console.log(formData);
         {/* <button type="submit">Send</button> */}
         <Stack direction="row" justifyContent="space-around" paddingBottom={8}>
           <Button
-            variant="contained"
-            onClick={handleSubmit}
-            style={{ backgroundColor: "#FA7015", width: "20%", minWidth: 100 }}
-            size="large"
-          >
-            送信
-          </Button>
-
-          <Button
             variant="outlined"
             onClick={handleCancelButton}
             style={{
@@ -285,6 +283,14 @@ console.log(formData);
             size="large"
           >
             キャセル
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            style={{ backgroundColor: "#FA7015", width: "20%", minWidth: 100 }}
+            size="large"
+          >
+            送信
           </Button>
         </Stack>
       </Box>

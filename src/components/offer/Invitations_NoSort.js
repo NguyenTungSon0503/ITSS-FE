@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { withAuth } from "../authentication/login";
+import { withAuth } from "../authentication/Login";
 import {
   Box,
   Stack,
@@ -14,7 +14,7 @@ import {
   Button,
 } from "@mui/material";
 import { Image } from "cloudinary-react";
-import TextRating from "../emoji/rating";
+import TextRating from "../emoji/Rating";
 
 const GetOfferTest = withAuth((props) => {
   const [offerData, setOfferData] = useState([]);
@@ -66,10 +66,10 @@ const GetOfferTest = withAuth((props) => {
 
   return (
     <div>
-      <ul>
+      {/* <ul>
         <pre>{JSON.stringify(offerData, null, 2)}</pre>
-      </ul>
-      <Typography>hhhhhhhhhhhhhhhhhhhhhhhhhhh</Typography>
+      </ul> */}
+      <Typography variant="h5" paddingLeft={5} paddingTop={3} paddingBottom={4}>受け入れ可能なお誘いは次のとおりです。</Typography>
       <div style={{ margin: "0 5%", borderBlockColor: "red" }}>
         <TableContainer>
           <Table>
@@ -115,43 +115,25 @@ const GetOfferTest = withAuth((props) => {
 
                     <TableCell>
                       <Typography>
-                        Name: {row.invitedSenderInfo.user_name}
+                        名前　{row.invitedSenderInfo.user_name}
                       </Typography>
-                      <Typography>Age: {row.age}</Typography>
-                      <Typography>Sex: {row.sex}</Typography>
+                      <Typography>年齢　{row.age}</Typography>
+                      <Typography>性別　{row.sex}</Typography>
                     </TableCell>
 
                     <TableCell>
                       <Typography>
-                        Meal price: {row.meal_price_range}
+                      食事の価格帯 {row.meal_price_range}
                       </Typography>
-                      <Typography>Note: {row.description}</Typography>
+                      <Typography>説明 {row.description}</Typography>
                     </TableCell>
 
                     <TableCell>
-                      <Stack direction={"column"} spacing={2}>
-                        <Button
-                          variant="contained"
-                          style={{
-                            borderRadius: 50,
-                            width: "100%",
-                            backgroundColor: "#14FED4",
-                          }}
-                        >
-                          Accept
-                        </Button>
-                        <Button
-                          variant="contained"
-                          style={{
-                            borderRadius: 50,
-                            width: "100%",
-                            backgroundColor: "#FF9A6E",
-                          }}
-                        >
-                          Reject
-                        </Button>
-                      </Stack>
-                    </TableCell>
+                    <Stack direction={"column"} spacing={2}>
+                        <Button variant="contained" style={{borderRadius: 50, width: '100%', backgroundColor: "#14FED4", color: "black"}}>アクセプト</Button>
+                        <Button variant="contained" style={{borderRadius: 50, width: '100%', backgroundColor: "#FF9A6E", color: "black"}}>リジェクト</Button>
+                    </Stack>
+                </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell colSpan={5}></TableCell>

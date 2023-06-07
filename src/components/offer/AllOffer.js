@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { withAuth } from "../authentication/login";
+import { withAuth } from "../authentication/Login";
 import {
   Box,
   Stack,
@@ -16,10 +16,10 @@ import {
 
 const GetOffer = withAuth((props) => {
   const [offerData, setOfferData] = useState({});
-
+  // console.log(offerData)
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/offers/partner_offer", {
+      .get("http://localhost:5000/api/offers/all_offers", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -39,9 +39,9 @@ const GetOffer = withAuth((props) => {
 
   let rows = [];
 
-  if (offerData && offerData.offers && offerData.offers.offerInfo) {
+  if (offerData && offerData.invitations) {
     // Mapping the offerInfo array to create rows with the required data structure
-    rows = offerData.offers.offerInfo.map((offer) => ({
+    rows = offerData.invitations.map((offer) => ({
       id: offer.id,
       inviter_id: offer.inviter_id,
       start_time: offer.start_time,
@@ -61,7 +61,7 @@ const GetOffer = withAuth((props) => {
       {/* <ul>
         <pre>{JSON.stringify(offerData, null, 2)}</pre>
       </ul> */}
-      <Typography>hhhhhhhhhhhhhhhhhhhhhhhhhhh</Typography>
+      <Typography variant="h5" paddingLeft={5} paddingTop={3} paddingBottom={4}>受け入れ可能なお誘いは次のとおりです。</Typography>
     <div style={{margin: "0 5%", borderBlockColor: "red"}}>
       <TableContainer >
         <Table>
@@ -106,8 +106,8 @@ const GetOffer = withAuth((props) => {
 
                 <TableCell>
                     <Stack direction={"column"} spacing={2}>
-                        <Button variant="contained" style={{borderRadius: 50, width: '100%', backgroundColor: "#14FED4"}}>Accept</Button>
-                        <Button variant="contained" style={{borderRadius: 50, width: '100%', backgroundColor: "#FF9A6E"}}>Reject</Button>
+                        <Button variant="contained" style={{borderRadius: 50, width: '100%', backgroundColor: "#14FED4", color: "black"}}>Accept</Button>
+                        <Button variant="contained" style={{borderRadius: 50, width: '100%', backgroundColor: "#FF9A6E", color: "black"}}>Reject</Button>
                     </Stack>
                 </TableCell>
 

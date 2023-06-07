@@ -9,10 +9,12 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { withAuth } from "../authentication/login";
+import { withAuth } from "../authentication/Login";
 import DateMUI from "./dateMUI";
 import Stack from "@mui/material/Stack";
+import CustomAlert from "../authentication/alert";
 
 const Offer = withAuth((props) => {
   const [formData, setFormData] = useState({
@@ -25,6 +27,13 @@ const Offer = withAuth((props) => {
     location: "",
     note: "",
   });
+  const navigate = useNavigate();
+  const [alertData, setAlert] = useState({
+    open: false,
+    message: " ",
+    type: "success",
+  });
+  // initialize state for CustomAlert  const navigate= useNavigate()
   // console.log(formData);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -53,8 +62,9 @@ const Offer = withAuth((props) => {
         location: "",
         note: "",
       });
+      navigate("/homepage");
     } else {
-      alert("Are you sure you want to cancel");
+      alert("キャンセルしますか？");
       setFormData({
         hour_start: "",
         hour_end: "",
@@ -83,6 +93,14 @@ const Offer = withAuth((props) => {
             withCredentials: true,
           }
         );
+        setAlert({
+          open: true,
+          message: "オファーを作りました",
+          type: "success",
+        });
+        setTimeout(() => {
+          navigate("/homepage");
+        }, 2000);
         console.log(res.data);
       } catch (err) {
         console.error(err);
@@ -102,11 +120,11 @@ const Offer = withAuth((props) => {
     const timeNowSecond =
       parseInt(timeNow.getHours() * 3600) + parseInt(timeNow.getMinutes() * 60);
     if (startTimeSecond < timeNowSecond) {
-      alert("Start time must be greater than or equal to Time Now");
+      alert("開始時刻は現在時刻以上でなければなりません。");
       return 0;
     } else {
       if (startTimeSecond > endTimeSecond) {
-        alert("End time must be greater than or equal to Start time");
+        alert("終了時刻は開始時刻以上でなければなりません。");
         return 0;
       } else {
         return 1;
@@ -122,7 +140,7 @@ const Offer = withAuth((props) => {
     const timeNow = new Date();
     const epochNow = timeNow.getTime();
     if (epochTime < epochNow) {
-      alert("Date should be greater or equal to Today");
+      alert("日付は今日以上でなければなりません。");
       return 0;
     } else {
       return 1;
@@ -130,6 +148,7 @@ const Offer = withAuth((props) => {
   }
   return (
     <div style={{ width: "100%", backgroundColor: "#FFFFFF" }}>
+      <CustomAlert alertData={alertData} />
       <Box paddingLeft={"5%"} paddingRight={"5%"} paddingTop={5}>
         <Typography variant="h4" paddingLeft={5} paddingTop={3}>
           オファー作り

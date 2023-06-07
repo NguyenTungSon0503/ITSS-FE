@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Alert from "./Alert";
 import axios from "axios";
-import { withAuth } from "../authentication/login";
+import { withAuth } from "../authentication/Login";
 
 const Upload = withAuth((props) => {
   const [fileInputState, setFileInputState] = useState("");

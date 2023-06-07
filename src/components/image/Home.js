@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Image } from "cloudinary-react";
 import axios from "axios";
-import { withAuth } from "../authentication/login";
+import { withAuth } from "../authentication/Login";
 import TestEmoji from "../emoji/Emoji";
-import TestDate from "../offer/date";
 
 const Home = withAuth((props) => {
   const [imageId, setImageIds] = useState();
@@ -36,7 +35,6 @@ const Home = withAuth((props) => {
         />
       </div>
       {/* <TestEmoji /> */}
-      <TestDate />
     </div>
   );
 });

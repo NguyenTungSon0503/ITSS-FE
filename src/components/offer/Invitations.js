@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { withAuth } from "../authentication/login";
+import { withAuth } from "../authentication/Login";
 import {
   Box,
   Stack,
@@ -14,7 +14,7 @@ import {
   Button,
 } from "@mui/material";
 import { Image } from "cloudinary-react";
-import TextRating from "../emoji/rating";
+import TextRating from "../emoji/Rating";
 
 const Invitations = withAuth((props) => {
   const [invitationsData, setInvitationsData] = useState([]);

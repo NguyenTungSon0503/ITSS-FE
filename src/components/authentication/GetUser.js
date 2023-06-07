@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { withAuth } from "./login";
+import { withAuth } from "./Login";
 import { useNavigate } from "react-router-dom";
 const GetUser = withAuth((props) => {
   const [userData, setUserData] = useState({});

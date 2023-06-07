@@ -51,7 +51,7 @@ const labels = {
 
 export default function TextRating() {
   const [value, setValue] = React.useState(3.5);
-  console.log(value);
+  // console.log(value);
   return (
     <Box
       sx={{

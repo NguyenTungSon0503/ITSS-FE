@@ -9,9 +9,11 @@ import { Cookies } from "react-cookie";
 import GetUser from "./components/authentication/get_user";
 import Upload from './components/image/Upload';
 import Home from './components/image/Home';
-import Offer from "./components/offer/offer";
-import GetOffer from "./components/offer/get_offer(partner)";
-import GetOfferUser from "./components/offer/get_offer(user)";
+import Offer from "./components/offer/CreateOffer";
+import GetOffer from "./components/offer/AllOffer";
+import GetOfferTest from './components/offer/Invitations_NoSort';
+import HomePage from "./components/HomePage";
+import Invitations from "./components/offer/Invitations";
 
 const cookies = new Cookies()
 const accessToken = cookies.get("accessToken");
@@ -26,8 +28,11 @@ const App = () => {
         <Route path="/upload" element={<Upload />} />
         <Route path="/home" element={<Home />} />
         <Route path="/offer" element={<Offer   />} />
+        <Route path="/partner_offer_test" element={<GetOfferTest   />} />
         <Route path="/partner_offer" element={<GetOffer   />} />
-        <Route path="/user_offer" element={<GetOfferUser   />} />
+        <Route path="/homepage" element={<HomePage   />} />
+        <Route path="/invitations" element={<Invitations  />} />
+
         </Routes>
     </BrowserRouter>
   );

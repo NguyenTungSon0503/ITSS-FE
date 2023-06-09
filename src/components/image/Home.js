@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Image } from "cloudinary-react";
 import axios from "axios";
-import { withAuth } from "../login";
+import { withAuth } from "../authentication/Login";
+import TestEmoji from "../emoji/Emoji";
 
 const Home = withAuth((props) => {
   const [imageId, setImageIds] = useState();
@@ -33,6 +34,7 @@ const Home = withAuth((props) => {
           crop="scale"
         />
       </div>
+      {/* <TestEmoji /> */}
     </div>
   );
 });

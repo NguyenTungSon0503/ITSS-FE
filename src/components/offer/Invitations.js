@@ -15,9 +15,11 @@ import {
 } from "@mui/material";
 import { Image } from "cloudinary-react";
 import TextRating from "../emoji/Rating";
+import { useNavigate } from "react-router-dom";
 
 const Invitations = withAuth((props) => {
   const [invitationsData, setInvitationsData] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/offers/invitations", {
@@ -37,6 +39,10 @@ const Invitations = withAuth((props) => {
         console.error(error);
       });
   }, [props.accessToken]);
+
+  const handleAccept = (invitationId, date, startTime, endTime) => {
+    navigate(`/recommend/${invitationId}`, { state: { invitationId ,date, startTime, endTime } });
+  };
 
   return (
     <div>
@@ -127,6 +133,8 @@ const Invitations = withAuth((props) => {
                             backgroundColor: "#14FED4",
                             color: "black",
                           }}
+                          onClick={() =>
+                            handleAccept(invitation.invitationInfor.id, invitation.invitationInfor.date, invitation.invitationInfor.start_time, invitation.invitationInfor.end_time)}
                         >
                           アクセプト
                         </Button>

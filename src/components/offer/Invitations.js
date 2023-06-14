@@ -20,9 +20,14 @@ import { useNavigate } from "react-router-dom";
 const Invitations = withAuth((props) => {
   const [invitationsData, setInvitationsData] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
+    fetchInvitationsData();
+  }, [props.accessToken]);
+
+  const fetchInvitationsData = () => {
     axios
-      .get("http://localhost:5000/api/offers/invitations", {
+      .get("http://localhost:5000/api/offers/test", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -30,7 +35,6 @@ const Invitations = withAuth((props) => {
       })
       .then((response) => {
         setInvitationsData(response.data);
-        // console.log(response.data);
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -38,10 +42,28 @@ const Invitations = withAuth((props) => {
         }
         console.error(error);
       });
-  }, [props.accessToken]);
+  };
+
+  const handleRejectButton = async (invitation) => {
+    const data = { id: invitation.invitationInfor.id };
+    const res = await axios.post(
+      "http://localhost:5000/api/offers/reject",
+      data,
+      {
+        headers: {
+          authorization: `Bearer ${props.accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+    // Fetch the updated invitations data after rejecting an invitation
+    fetchInvitationsData();
+  };
 
   const handleAccept = (invitationId, date, startTime, endTime) => {
-    navigate(`/recommend/${invitationId}`, { state: { invitationId ,date, startTime, endTime } });
+    navigate(`/recommend/${invitationId}`, {
+      state: { invitationId, date, startTime, endTime },
+    });
   };
 
   return (
@@ -134,7 +156,13 @@ const Invitations = withAuth((props) => {
                             color: "black",
                           }}
                           onClick={() =>
-                            handleAccept(invitation.invitationInfor.id, invitation.invitationInfor.date, invitation.invitationInfor.start_time, invitation.invitationInfor.end_time)}
+                            handleAccept(
+                              invitation.invitationInfor.id,
+                              invitation.invitationInfor.date,
+                              invitation.invitationInfor.start_time,
+                              invitation.invitationInfor.end_time
+                            )
+                          }
                         >
                           アクセプト
                         </Button>
@@ -146,6 +174,7 @@ const Invitations = withAuth((props) => {
                             backgroundColor: "#FF9A6E",
                             color: "black",
                           }}
+                          onClick={() => handleRejectButton(invitation)}
                         >
                           リジェクト
                         </Button>

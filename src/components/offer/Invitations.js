@@ -128,10 +128,10 @@ const Invitations = withAuth((props) => {
                         名前　{invitation.userInfo.user_name}
                       </Typography>
                       <Typography>
-                        年齢　{invitation.invitationInfor.age}
+                        年齢　{invitation.userInfo.age}
                       </Typography>
                       <Typography>
-                        性別　{invitation.invitationInfor.sex}
+                        性別　{invitation.userInfo.sex}
                       </Typography>
                     </TableCell>
 

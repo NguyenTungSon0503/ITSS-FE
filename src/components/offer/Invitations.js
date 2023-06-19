@@ -27,7 +27,7 @@ const Invitations = withAuth((props) => {
 
   const fetchInvitationsData = () => {
     axios
-      .get("http://localhost:5000/api/offers/test", {
+      .get("http://localhost:5000/api/offers/invitations", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },

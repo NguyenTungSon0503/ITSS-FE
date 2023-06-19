@@ -17,6 +17,7 @@ import Invitations from "./components/offer/Invitations";
 
 import ResponsiveAppBar from "./components/Navbar/Navbar";
 import Recommend from "./components/offer/Recommend";
+import Recuit from "./components/recommendations(JP)/Recommendations";
 
 const cookies = new Cookies();
 const accessToken = cookies.get("accessToken");
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/invitations" element={<Invitations />} />
         <Route path="/recommend/:invitationId" element={<Recommend />} />
+        <Route path="/recuit" element={<Recuit />} />
         </Routes>
     </BrowserRouter>
   );

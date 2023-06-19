@@ -1,6 +1,7 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { Image } from "cloudinary-react";
 import { useLocation } from "react-router-dom";
 import { withAuth } from "../authentication/Login";
 
@@ -26,8 +27,7 @@ const Recommend = withAuth((props) => {
       .then((response) => {
         setUserData(response.data);
         console.log(response.data);
-      })
-
+      });
   }, [props.accessToken]);
 
   const handleInputChange = (event) => {
@@ -64,129 +64,134 @@ const Recommend = withAuth((props) => {
       {date && (
         <Stack direction="column" paddingLeft={10} paddingRight={10}>
           <Stack direction="row" marginTop={5}>
-            {/* <p>Date: {date}</p>
-          <p>Start Time: {startTime}</p>
-          <p>End Time: {endTime}</p>
-          <p>{invitationId}</p> */}
-            <Box flex={2} sx={{}}></Box>
-            {userData.users &&(
-            <Stack direction="column" flex={3} spacing={2} marginLeft={5}>
-              <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>
-                  name
-                </Typography>
-                <TextField
-                  // sx={{ flex: 2 }}
-                  InputProps={{
-                    inputProps: {
-                      style: { textAlign: "center", fontSize: 20 },
-                    },
-                  }}
-                  value={userData.users.name}
-                  disabled
-                  variant="standard"
-                ></TextField>
-              </Stack>
+            {userData.users && (
+              <Box flex={2} sx={{}}>
+                <Image
+                  cloudName="dul81x4pq"
+                  publicId={userData.users.avatar}
+                  width="150"
+                  crop="scale"
+                />
+              </Box>
+            )}
+            {userData.users && (
+              <Stack direction="column" flex={3} spacing={2} marginLeft={5}>
+                <Stack direction="row">
+                  <Typography flex={1} sx={{ fontSize: 24 }}>
+                    名前
+                  </Typography>
+                  <TextField
+                    // sx={{ flex: 2 }}
+                    InputProps={{
+                      inputProps: {
+                        style: { textAlign: "center", fontSize: 20 },
+                      },
+                    }}
+                    value={userData.users.name}
+                    disabled
+                    variant="standard"
+                  ></TextField>
+                </Stack>
 
-              <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>
-                  age
-                </Typography>
-                <TextField
-                  InputProps={{
-                    inputProps: {
-                      style: { textAlign: "center", fontSize: 20 },
-                    },
-                  }}
-                  value="21"
-                  disabled
-                  variant="standard"
-                ></TextField>
-              </Stack>
+                <Stack direction="row">
+                  <Typography flex={1} sx={{ fontSize: 24 }}>
+                    年齢
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      inputProps: {
+                        style: { textAlign: "center", fontSize: 20 },
+                      },
+                    }}
+                    value={userData.users.age}
+                    disabled
+                    variant="standard"
+                  ></TextField>
+                </Stack>
 
-              <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>
-                  sex
-                </Typography>
-                <TextField
-                  InputProps={{
-                    inputProps: {
-                      style: { textAlign: "center", fontSize: 20 },
-                    },
-                  }}
-                  value="male"
-                  disabled
-                  variant="standard"
-                ></TextField>
-              </Stack>
+                <Stack direction="row">
+                  <Typography flex={1} sx={{ fontSize: 24 }}>
+                    性別
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      inputProps: {
+                        style: { textAlign: "center", fontSize: 20 },
+                      },
+                    }}
+                    value={userData.users.sex}
+                    disabled
+                    variant="standard"
+                  ></TextField>
+                </Stack>
 
-              <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>
-                  location
-                </Typography>
-                <TextField
-                  InputProps={{
-                    inputProps: {
-                      style: { textAlign: "center", fontSize: 20 },
-                    },
-                  }}
-                  value="name"
-                  disabled
-                  variant="standard"
-                ></TextField>
-              </Stack>
+                <Stack direction="row">
+                  <Typography flex={1} sx={{ fontSize: 24 }}>
+                    場所
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      inputProps: {
+                        style: { textAlign: "center", fontSize: 20 },
+                      },
+                    }}
+                    value={userData.users.location}
+                    disabled
+                    variant="standard"
+                  ></TextField>
+                </Stack>
 
-              <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>
-                  food_recommend
-                </Typography>
-                <TextField
-                  InputProps={{
-                    inputProps: {
-                      style: { textAlign: "center", fontSize: 20 },
-                    },
-                  }}
-                  variant="standard"
-                  onChange={handleInputChange}
-                  name="food_recommend"
-                  value={formData.food_recommend}
-                ></TextField>
-              </Stack>
+                <Stack direction="row">
+                  <Typography flex={1} sx={{ fontSize: 24 }}>
+                    食べ物の提案
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      inputProps: {
+                        style: { textAlign: "center", fontSize: 20 },
+                      },
+                    }}
+                    variant="standard"
+                    onChange={handleInputChange}
+                    name="food_recommend"
+                    value={formData.food_recommend}
+                  ></TextField>
+                </Stack>
 
-              <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>
-                  meal_price
-                </Typography>
-                <TextField
-                  InputProps={{
-                    inputProps: {
-                      style: { textAlign: "center", fontSize: 20 },
-                    },
-                  }}
-                  variant="standard"
-                  onChange={handleInputChange}
-                  name="meal_price"
-                  value={formData.meal_price}
-                ></TextField>
-              </Stack>
+                <Stack direction="row">
+                  <Typography flex={1} sx={{ fontSize: 24 }}>
+                    価格
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      inputProps: {
+                        style: { textAlign: "center", fontSize: 20 },
+                      },
+                    }}
+                    variant="standard"
+                    onChange={handleInputChange}
+                    name="meal_price"
+                    value={formData.meal_price}
+                  ></TextField>
+                </Stack>
 
-              <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>
-                  description
-                </Typography>
-                <TextField
-                  InputProps={{
-                    inputProps: {
-                      style: { textAlign: "center", fontSize: 20 },
-                    },
-                  }}
-                  variant="standard"
-                  onChange={handleInputChange}
-                  name="description"
-                  value={formData.description}
-                ></TextField>
+                <Stack direction="row">
+                  <Typography flex={1} sx={{ fontSize: 24 }}>
+                    その他
+                  </Typography>
+                  <TextField
+                    InputProps={{
+                      inputProps: {
+                        style: { textAlign: "center", fontSize: 20 },
+                      },
+                    }}
+                    variant="standard"
+                    onChange={handleInputChange}
+                    name="description"
+                    value={formData.description}
+                  ></TextField>
+                </Stack>
               </Stack>
-            </Stack>
             )}
 
             <Stack
@@ -197,12 +202,14 @@ const Recommend = withAuth((props) => {
               marginLeft={5}
             >
               <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>time</Typography>
+                <Typography flex={1} sx={{ fontSize: 24 }}>
+                  時間
+                </Typography>
                 <TextField
                   sx={{ flex: 2 }}
                   InputProps={{
                     inputProps: {
-                      style: { textAlign: "center", fontSize: 20  },
+                      style: { textAlign: "center", fontSize: 20 },
                     },
                   }}
                   disabled
@@ -212,12 +219,14 @@ const Recommend = withAuth((props) => {
               </Stack>
 
               <Stack direction="row">
-                <Typography flex={1} sx={{ fontSize: 24 }}>date</Typography>
+                <Typography flex={1} sx={{ fontSize: 24 }}>
+                  日付
+                </Typography>
                 <TextField
                   sx={{ flex: 2 }}
                   InputProps={{
                     inputProps: {
-                      style: { textAlign: "center", fontSize: 20  },
+                      style: { textAlign: "center", fontSize: 20 },
                     },
                   }}
                   disabled
@@ -234,9 +243,15 @@ const Recommend = withAuth((props) => {
             marginTop={5}
             spacing={20}
           >
-            <Button variant="outlined">Cancel</Button>
-            <Button variant="contained" onClick={handleSubmit}>
-              Send
+            <Button variant="outlined" sx={{ minWidth: 150 }}>
+              キャンセル
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              sx={{ minWidth: 150 }}
+            >
+              送信
             </Button>
           </Stack>
         </Stack>

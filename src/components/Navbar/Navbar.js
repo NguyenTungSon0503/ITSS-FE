@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,14 +15,24 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 
 const pages = [
-  { label: 'Offer', path: '/offer'},
-  { label: 'Invitations', path: '/invitations' },
-  { label: 'Chat', path: '/chat' },
-  { label: 'Recommend', path: '/recommend' },
+  { label: 'オファー選び', path: '/invitations' },
+  { label: 'チャット', path: '/chat' },
+  { label: '予定管理', path: '/contract' },
+
+  { label: 'Login', path: '/login'},
+  { label: 'Register', path: '/register'},
+];
+
+const userPages = [
+  { label: 'オファー', path: '/offer'},
+  { label: 'チャット', path: '/chat' },
+  { label: '予定管理', path: '/contract'},
+  { label: 'おすすめ選び', path: '/recuit' },
+
   { label: 'Login', path: '/login'},
   { label: 'Register', path: '/register'},
 
-];
+]
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -30,6 +40,9 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+
+  const role = localStorage.getItem('role')
+  console.log(role)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -53,7 +66,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#FBBC84' }}>
+    <AppBar position="static" sx={{ backgroundColor: '#e8894e' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -114,16 +127,28 @@ function ResponsiveAppBar() {
 
           <Box sx={{ flexGrow: 1 }} /> {/* Add this empty box to push the buttons to the right */}
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.label}
-                onClick={() => handleNavigation(page.path)}
-                sx={{ mx: 1, color: 'white' }}
-              >
-                {page.label}
-              </Button>
-            ))}
-          </Box>
+        {role === 'user' ? (
+          userPages.map((page) => (
+            <Button
+              key={page.label}
+              onClick={() => handleNavigation(page.path)}
+              sx={{ mx: 1, color: 'white' }}
+            >
+              {page.label}
+            </Button>
+          ))
+        ) : (
+          pages.map((page) => (
+            <Button
+              key={page.label}
+              onClick={() => handleNavigation(page.path)}
+              sx={{ mx: 1, color: 'white' }}
+            >
+              {page.label}
+            </Button>
+          ))
+        )}
+      </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

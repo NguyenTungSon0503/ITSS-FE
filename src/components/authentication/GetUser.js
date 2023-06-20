@@ -16,6 +16,7 @@ const GetUser = withAuth((props) => {
       })
       .then((response) => {
         setUserData(response.data);
+        localStorage.setItem('role', response.data.users.role)
         console.log(response.data);
       })
       .catch((error) => {

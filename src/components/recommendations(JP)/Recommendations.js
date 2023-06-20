@@ -214,7 +214,7 @@ const Recuit = withAuth((props) => {
                             </Typography>
                           </TableCell>
 
-                          <TableCell>
+                          <TableCell onClick={(e) => e.stopPropagation()}>
                             <Stack direction={"column"} spacing={2}>
                               <Button
                                 variant="contained"

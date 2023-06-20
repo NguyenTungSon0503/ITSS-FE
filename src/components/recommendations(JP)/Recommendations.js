@@ -50,6 +50,26 @@ const Recuit = withAuth((props) => {
       });
   }, [props.accessToken, navigate]);
 
+  const handleAccept = (recommendation_id) => {
+    const sendData = { recommendation_id };
+    console.log(sendData);
+    axios
+      .post("http://localhost:5000/api/contracts", sendData, {
+        headers: {
+          authorization: `Bearer ${props.accessToken}`,
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 403) {
+        }
+        console.error(error);
+      });
+  };
+
   return (
     <div>
       {/* <ul>
@@ -79,7 +99,7 @@ const Recuit = withAuth((props) => {
                   <Typography>
                     {" "}
                     {data[invitationId].invitationInfo.start_time} ~{" "}
-                    {data[invitationId].invitationInfo.start_time}{" "}
+                    {data[invitationId].invitationInfo.end_time}{" "}
                   </Typography>
                 </Box>
               )}
@@ -156,24 +176,29 @@ const Recuit = withAuth((props) => {
                               年齢　{recommendation.userInfo.age}
                             </Typography>
                             <Typography>
-                              性別　{recommendation.userInfo.sex}
+                              性別　
+                              {recommendation.userInfo.sex === "male"
+                                ? "男性"
+                                : recommendation.userInfo.sex === "female"
+                                ? "女性"
+                                : "その他"}
                             </Typography>
                           </TableCell>
 
                           <TableCell>
                             <Typography>
-                              食事の価格帯{" "}
+                              食事の価格帯　
                               {recommendation.recommendationInfo.food_recommend}
                             </Typography>
                             <Typography>
-                              説明{" "}
+                              説明　 <br />
                               {recommendation.recommendationInfo.description}
                             </Typography>
                           </TableCell>
 
                           <TableCell>
                             <Typography>
-                              説明{" "}
+                              価格 <br />
                               {recommendation.recommendationInfo.meal_price}
                             </Typography>
                           </TableCell>
@@ -188,14 +213,11 @@ const Recuit = withAuth((props) => {
                                   backgroundColor: "#14FED4",
                                   color: "black",
                                 }}
-                                // onClick={() =>
-                                //   handleAccept(
-                                //     invitation.invitationInfor.id,
-                                //     invitation.invitationInfor.date,
-                                //     invitation.invitationInfor.start_time,
-                                //     invitation.invitationInfor.end_time
-                                //   )
-                                // }
+                                onClick={() =>
+                                  handleAccept(
+                                    recommendation.recommendationInfo.id
+                                  )
+                                }
                               >
                                 アクセプト
                               </Button>
@@ -207,7 +229,7 @@ const Recuit = withAuth((props) => {
                                   backgroundColor: "#FF9A6E",
                                   color: "black",
                                 }}
-                                // onClick={() => handleRejectButton(invitation)}
+                                // onClick={() => handleRejectButton(recommendation.recommendationInfo.id)}
                               >
                                 リジェクト
                               </Button>

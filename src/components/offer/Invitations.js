@@ -128,10 +128,13 @@ const Invitations = withAuth((props) => {
                       </Typography>
                       <Typography>年齢　{invitation.userInfo.age}</Typography>
                       <Typography>
+                        年齢　{invitation.invitationInfor.age}
+                      </Typography>
+                      <Typography>
                         性別　
-                        {invitation.userInfo.sex === "male"
+                        {invitation.invitationInfor.sex === "male"
                           ? "男性"
-                          : invitation.userInfo.sex === "female"
+                          : invitation.invitationInfor.sex === "female"
                           ? "女性"
                           : "その他"}
                       </Typography>

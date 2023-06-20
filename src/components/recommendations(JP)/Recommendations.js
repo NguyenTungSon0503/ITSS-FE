@@ -13,6 +13,7 @@ import {
   TableContainer,
   Table,
   Button,
+  Modal,
 } from "@mui/material";
 
 import { Image } from "cloudinary-react";
@@ -22,6 +23,29 @@ const Recuit = withAuth((props) => {
   const [data, setData] = useState({});
   const navigate = useNavigate();
   const [selectedInvitation, setSelectedInvitation] = useState(null);
+  const [selectedRecommendation, setSelectedRecommendation] = useState(null);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (recommendation) => {
+    setSelectedRecommendation(recommendation);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    height: 600,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    // p: 4,
+  };
 
   const handleInvitationClick = (invitationId) => {
     setSelectedInvitation(invitationId);
@@ -76,86 +100,73 @@ const Recuit = withAuth((props) => {
         <pre>{JSON.stringify(data, null, 2)}</pre>
       </ul> */}
 
-      <Stack direction="row" sx={{ border: 1 }}>
-        <Box flex={1} sx={{ border: 1 }}>
+      <Stack direction="row" margin={5} sx={{ border: 1, minHeight: 800 }}>
+        <Box flex={1} sx={{borderRight: 1}}>
           {/* Left sidebar: List of invitations */}
           {Object.keys(data).map((invitationId) => (
             <div
               key={invitationId}
               onClick={() => handleInvitationClick(invitationId)}
+              className={
+                invitationId === selectedInvitation ? "selected-invitation" : ""
+              }
             >
               {/* <Typography> Invitation {invitationId} </Typography> */}
               {data[invitationId] && (
                 <Box
                   paddingBottom={3}
                   paddingTop={3}
-                  sx={{ textAlign: "center" }}
+                  sx={{
+                    textAlign: "center",
+                    borderBottom: 1,
+                    // borderTopLeftRadius: 20,
+                    backgroundColor:
+                      invitationId === selectedInvitation
+                        ? "lightblue"
+                        : "transparent",
+
+                    cursor: "pointer",
+                    "&:hover": {
+                      backgroundColor: "#E8E8E8",
+                    },
+                  }}
                 >
                   {/* <Typography> Invitation {data[invitationId].invitationInfo.id} </Typography> */}
                   <Typography>
-                    {" "}
-                    {data[invitationId].invitationInfo.date.split("T")[0]}{" "}
+                    {data[invitationId].invitationInfo.date.split("T")[0]}
                   </Typography>
                   <Typography>
                     {" "}
-                    {data[invitationId].invitationInfo.start_time} ~{" "}
-                    {data[invitationId].invitationInfo.end_time}{" "}
+                    {data[invitationId].invitationInfo.start_time} ~
+                    {data[invitationId].invitationInfo.end_time}
                   </Typography>
                 </Box>
               )}
             </div>
           ))}
         </Box>
-        <Box flex={4} sx={{ border: 1 }}>
+        <Box flex={4}>
           {/* Right side: List of users who accepted the selected invitation */}
           {selectedInvitation && (
-            // <div>
-            //   {data[selectedInvitation].recommendations.map((recommendation) => (
-            //     <div key={recommendation.recommendationInfo.id}>
-            //       User: {recommendation.userInfo.user_name}
-            //     </div>
-            //   ))}
-            // </div>
-
             <TableContainer>
               <Table>
-                <TableHead>
-                  {/* <TableRow>
-                        <TableCell>Date</TableCell>
-                        <TableCell>Avatar</TableCell>
-                        <TableCell>Info Basic</TableCell>
-                        <TableCell>Meal Info</TableCell>
-                        <TableCell>Actions</TableCell>
-                      </TableRow> */}
-                </TableHead>
+                <TableHead></TableHead>
                 <TableBody>
                   {data[selectedInvitation].recommendations.map(
                     (recommendation) => (
                       <React.Fragment
                         key={recommendation.recommendationInfo.id}
                       >
-                        <TableRow>
-                          {/* <TableCell width={"10%"} align="center">
-                          <Typography>
-                            {invitation.invitationInfor.date.split("T")[0]}
-                          </Typography>
-                          <Stack direction={"row"} justifyContent="center">
-                            <Typography>
-                              {invitation.invitationInfor.start_time}
-                            </Typography>
-                            <Typography>~</Typography>
-                            <Typography>
-                              {invitation.invitationInfor.end_time}
-                            </Typography>
-                          </Stack>
-                          <Box
-                            style={{
-                              minHeight: "5%",
-                              backgroundColor: "lightblue",
-                            }}
-                          ></Box>
-                        </TableCell> */}
-
+                        {/*  */}
+                        <TableRow
+                          onClick={() => handleOpen(recommendation)}
+                          sx={{
+                            cursor: "pointer",
+                            "&:hover": {
+                              backgroundColor: "#E8E8E8",
+                            },
+                          }}
+                        >
                           <TableCell align="center">
                             <Stack direction="column" alignItems="center">
                               <Image
@@ -169,10 +180,10 @@ const Recuit = withAuth((props) => {
                           </TableCell>
 
                           <TableCell>
-                            <Typography>
+                            <Typography sx={{ marginBottom: 1 }}>
                               名前　{recommendation.userInfo.user_name}
                             </Typography>
-                            <Typography>
+                            <Typography sx={{ marginBottom: 1 }}>
                               年齢　{recommendation.userInfo.age}
                             </Typography>
                             <Typography>
@@ -197,8 +208,8 @@ const Recuit = withAuth((props) => {
                           </TableCell>
 
                           <TableCell>
-                            <Typography>
-                              価格 <br />
+                            <Typography sx={{ textAlign: "center" }}>
+                              説明 <br />
                               {recommendation.recommendationInfo.meal_price}
                             </Typography>
                           </TableCell>
@@ -236,9 +247,9 @@ const Recuit = withAuth((props) => {
                             </Stack>
                           </TableCell>
                         </TableRow>
-                        <TableRow>
+                        {/* <TableRow>
                           <TableCell colSpan={5}></TableCell>
-                        </TableRow>
+                        </TableRow> */}
                       </React.Fragment>
                     )
                   )}
@@ -248,6 +259,66 @@ const Recuit = withAuth((props) => {
           )}
         </Box>
       </Stack>
+
+      {selectedRecommendation && (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Recommendation Details
+            </Typography>
+            <Typography id="modal-modal-description">
+              <Stack direction="column" sx={{ marginBottom: 5, border: 1 }}>
+                <Stack direction="row" sx={{ margin: 5 }}>
+                  <Image
+                    cloudName="dul81x4pq"
+                    publicId={selectedRecommendation.userInfo.avatar}
+                    width="150"
+                    crop="scale"
+                  />
+                  <Box marginLeft={5}>
+                    <Typography sx={{ marginBottom: 1 }}>
+                      名前　{selectedRecommendation.userInfo.user_name}
+                    </Typography>
+                    <Typography sx={{ marginBottom: 1 }}>
+                      年齢　{selectedRecommendation.userInfo.age}
+                    </Typography>
+                    <Typography>
+                      性別　{selectedRecommendation.userInfo.sex}
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Stack direction="row" marginBottom={5} marginLeft={5}>
+                  <Typography>ffffffffffffff</Typography>
+                  <TextRating />
+                </Stack>
+              </Stack>
+              <Stack direction="column">
+                <Stack direction="row" sx={{ marginBottom: 5, marginLeft: 5 }}>
+                  <Stack direction="column">
+                    <TextRating />
+                    <Typography>name</Typography>
+                    <Typography>time</Typography>
+                  </Stack>
+                  <Stack>comment</Stack>
+                </Stack>
+                <Stack direction="row" sx={{ marginBottom: 5, marginLeft: 5 }}>
+                  <Stack direction="column">
+                    <TextRating />
+                    <Typography>name</Typography>
+                    <Typography>time</Typography>
+                  </Stack>
+                  <Stack>comment</Stack>
+                </Stack>
+              </Stack>
+            </Typography>
+          </Box>
+        </Modal>
+      )}
     </div>
   );
 });

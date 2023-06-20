@@ -119,7 +119,13 @@ const Recommend = withAuth((props) => {
                         style: { textAlign: "center", fontSize: 20 },
                       },
                     }}
-                    value={userData.users.sex}
+                    value={
+                      userData.users.sex === "male"
+                        ? "男性"
+                        : userData.users.sex === "female"
+                        ? "女性"
+                        : "その他"
+                    }
                     disabled
                     variant="standard"
                   ></TextField>

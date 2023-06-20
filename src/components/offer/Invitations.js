@@ -20,14 +20,13 @@ import { useNavigate } from "react-router-dom";
 const Invitations = withAuth((props) => {
   const [invitationsData, setInvitationsData] = useState([]);
   const navigate = useNavigate();
-
   useEffect(() => {
     fetchInvitationsData();
   }, [props.accessToken]);
-
+  console.log(invitationsData)
   const fetchInvitationsData = () => {
     axios
-      .get("http://localhost:5000/api/offers/test", {
+      .get("http://localhost:5000/api/offers/invitations", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -127,11 +126,14 @@ const Invitations = withAuth((props) => {
                       <Typography>
                         名前　{invitation.userInfo.user_name}
                       </Typography>
+                      <Typography>年齢　{invitation.userInfo.age}</Typography>
                       <Typography>
-                        年齢　{invitation.invitationInfor.age}
-                      </Typography>
-                      <Typography>
-                        性別　{invitation.invitationInfor.sex}
+                        性別　
+                        {invitation.userInfo.sex === "male"
+                          ? "男性"
+                          : invitation.userInfo.sex === "female"
+                          ? "女性"
+                          : "その他"}
                       </Typography>
                     </TableCell>
 

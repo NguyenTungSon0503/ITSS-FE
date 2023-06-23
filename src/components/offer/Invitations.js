@@ -25,7 +25,7 @@ const Invitations = withAuth((props) => {
   }, [props.accessToken]);
   const fetchInvitationsData = () => {
     axios
-      .get("http://localhost:5000/api/offers/test", {
+      .get("http://localhost:5000/api/offers/invitations", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -127,7 +127,7 @@ const Invitations = withAuth((props) => {
                       </Typography>
                       {/* <Typography>年齢　{invitation.userInfo.age}</Typography> */}
                       <Typography>
-                        年齢　{invitation.invitationInfor.age}
+                        年齢　{invitation.userInfo.age}
                       </Typography>
                       <Typography>
                         性別　

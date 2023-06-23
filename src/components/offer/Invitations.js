@@ -23,10 +23,9 @@ const Invitations = withAuth((props) => {
   useEffect(() => {
     fetchInvitationsData();
   }, [props.accessToken]);
-  console.log(invitationsData)
   const fetchInvitationsData = () => {
     axios
-      .get("http://localhost:5000/api/offers/invitations", {
+      .get("http://localhost:5000/api/offers/test", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -44,7 +43,7 @@ const Invitations = withAuth((props) => {
   };
 
   const handleRejectButton = async (invitation) => {
-    const data = { id: invitation.invitationInfor.id };
+    const data = { invitation_id: invitation.invitationInfor.id };
     const res = await axios.post(
       "http://localhost:5000/api/offers/reject",
       data,
@@ -126,7 +125,7 @@ const Invitations = withAuth((props) => {
                       <Typography>
                         名前　{invitation.userInfo.user_name}
                       </Typography>
-                      <Typography>年齢　{invitation.userInfo.age}</Typography>
+                      {/* <Typography>年齢　{invitation.userInfo.age}</Typography> */}
                       <Typography>
                         年齢　{invitation.invitationInfor.age}
                       </Typography>

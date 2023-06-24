@@ -6,7 +6,6 @@ import CustomAlert from "./alert";
 
 function Register() {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     role: "",
     password: "",
@@ -76,16 +75,6 @@ function Register() {
     <div>
       <CustomAlert alertData={alert} />
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input

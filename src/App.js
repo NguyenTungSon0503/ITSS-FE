@@ -17,7 +17,7 @@ import Invitations from "./components/offer/Invitations";
 
 import ResponsiveAppBar from "./components/Navbar/Navbar";
 import Recommend from "./components/offer/Recommend";
-import Recuit from "./components/recommendations(JP)/Recommendations";
+import Recuit from "./components/recommendationsJP/Recommendations";
 import Contracts from "./components/contracts/contracts";
 import ContractsPartner from "./components/contracts/contracts(partner)";
 

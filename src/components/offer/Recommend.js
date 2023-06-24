@@ -4,11 +4,13 @@ import React, { useState, useEffect } from "react";
 import { Image } from "cloudinary-react";
 import { useLocation } from "react-router-dom";
 import { withAuth } from "../authentication/Login";
+import { useNavigate } from "react-router-dom";
 
 const Recommend = withAuth((props) => {
   const location = useLocation();
   const [userData, setUserData] = useState({});
   const { invitationId, date, startTime, endTime } = location.state || {};
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     food_recommend: "",
@@ -52,6 +54,7 @@ const Recommend = withAuth((props) => {
           withCredentials: true,
         }
       );
+      navigate(-1)
     } catch (err) {
       console.error(err);
     }

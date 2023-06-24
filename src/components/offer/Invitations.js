@@ -126,7 +126,6 @@ const Invitations = withAuth((props) => {
                       <Typography>
                         名前　{invitation.userInfo.user_name}
                       </Typography>
-                      <Typography>年齢　{invitation.userInfo.age}</Typography>
                       <Typography>
                         年齢　{invitation.invitationInfor.age}
                       </Typography>

@@ -40,7 +40,7 @@ const Offer = withAuth((props) => {
     setFormData({ ...formData, [name]: value });
     // console.log(typeof formData.hour_start);
   };
-
+const blockInvalidChar = (e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault();
   const handleCancelButton = (event) => {
     if (
       formData.hour_start === "" &&
@@ -246,6 +246,7 @@ const Offer = withAuth((props) => {
               variant="standard"
               type="number"
               name="age"
+              onKeyDown={blockInvalidChar}
               value={formData.age}
               onChange={handleInputChange}
             />

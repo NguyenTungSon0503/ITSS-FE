@@ -2,13 +2,14 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Image } from "cloudinary-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { withAuth } from "../authentication/Login";
 import { useNavigate } from "react-router-dom";
 
 const Recommend = withAuth((props) => {
   const location = useLocation();
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
   const { invitationId, date, startTime, endTime } = location.state || {};
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ const Recommend = withAuth((props) => {
       })
       .then((response) => {
         setUserData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       });
   }, [props.accessToken]);
 
@@ -42,7 +43,7 @@ const Recommend = withAuth((props) => {
       invitation_id: invitationId,
       ...formData,
     };
-    console.log(requestData);
+    // console.log(requestData);
     try {
       const res = await axios.post(
         "http://localhost:5000/api/recommendations",
@@ -60,8 +61,27 @@ const Recommend = withAuth((props) => {
     }
   };
 
-  console.log(userData);
-
+  const handleCancelButton = (event) => {
+    if (
+      formData.food_recommend === "" &&
+      formData.meal_price === "" &&
+      formData.description === ""
+    ) {
+      setFormData({
+        food_recommend: "",
+        meal_price: "",
+        description: "",
+      });
+      navigate(-1);
+    } else {
+      alert("キャンセルしますか？");
+      setFormData({
+        food_recommend: "",
+        meal_price: "",
+        description: "",
+      });
+    }
+  };
   return (
     <div>
       {date && (
@@ -252,7 +272,11 @@ const Recommend = withAuth((props) => {
             marginTop={5}
             spacing={20}
           >
-            <Button variant="outlined" sx={{ minWidth: 150 }}>
+            <Button
+              variant="outlined"
+              sx={{ minWidth: 150 }}
+              onClick={handleCancelButton}
+            >
               キャンセル
             </Button>
             <Button

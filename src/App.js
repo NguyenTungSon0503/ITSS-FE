@@ -17,7 +17,9 @@ import Invitations from "./components/offer/Invitations";
 
 import ResponsiveAppBar from "./components/Navbar/Navbar";
 import Recommend from "./components/offer/Recommend";
-import Recuit from "./components/recommendations(JP)/Recommendations";
+import Recuit from "./components/recommendationsJP/Recommendations";
+import Contracts from "./components/contracts/contracts";
+import ContractsPartner from "./components/contracts/contracts(partner)";
 
 const cookies = new Cookies();
 const accessToken = cookies.get("accessToken");
@@ -42,6 +44,9 @@ const App = () => {
         <Route path="/invitations" element={<Invitations />} />
         <Route path="/recommend/:invitationId" element={<Recommend />} />
         <Route path="/recuit" element={<Recuit />} />
+        <Route path="/contracts" element={ <Contracts /> }/>
+        <Route path="/contracts/partner" element={ <ContractsPartner /> }/>
+
         </Routes>
     </BrowserRouter>
   );

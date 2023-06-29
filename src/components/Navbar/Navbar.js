@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 const pages = [
   { label: 'オファー選び', path: '/invitations' },
   { label: 'チャット', path: '/chat' },
-  { label: '予定管理', path: '/contract' },
+  { label: '予定管理', path: '/contracts/partner' },
 
   { label: 'Login', path: '/login'},
   { label: 'Register', path: '/register'},
@@ -26,7 +26,7 @@ const pages = [
 const userPages = [
   { label: 'オファー', path: '/offer'},
   { label: 'チャット', path: '/chat' },
-  { label: '予定管理', path: '/contract'},
+  { label: '予定管理', path: '/contracts'},
   { label: 'おすすめ選び', path: '/recuit' },
 
   { label: 'Login', path: '/login'},

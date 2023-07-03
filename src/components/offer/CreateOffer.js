@@ -40,7 +40,9 @@ const Offer = withAuth((props) => {
     setFormData({ ...formData, [name]: value });
     // console.log(typeof formData.hour_start);
   };
-const blockInvalidChar = (e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault();
+  const blockInvalidChar = e => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault(); 
+
+
   const handleCancelButton = (event) => {
     if (
       formData.hour_start === "" &&
@@ -260,6 +262,7 @@ const blockInvalidChar = (e) => ['e', 'E', '+', '-'].includes(e.key) && e.preven
             variant="standard"
             type="number"
             name="meal_price"
+            onKeyDown={blockInvalidChar}
             value={formData.meal_price}
             onChange={handleInputChange}
           />

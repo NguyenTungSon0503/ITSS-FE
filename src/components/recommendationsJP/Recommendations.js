@@ -76,7 +76,6 @@ const Recuit = withAuth((props) => {
 
   const handleAccept = (recommendation_id) => {
     const sendData = { recommendation_id };
-    console.log(sendData);
     axios
       .post("http://localhost:5000/api/contracts", sendData, {
         headers: {
@@ -92,6 +91,7 @@ const Recuit = withAuth((props) => {
         }
         console.error(error);
       });
+    navigate("/contracts");
   };
 
   return (
@@ -101,7 +101,7 @@ const Recuit = withAuth((props) => {
       </ul> */}
 
       <Stack direction="row" margin={5} sx={{ border: 1, minHeight: 800 }}>
-        <Box flex={1} sx={{borderRight: 1}}>
+        <Box flex={1} sx={{ borderRight: 1 }}>
           {/* Left sidebar: List of invitations */}
           {Object.keys(data).map((invitationId) => (
             <div
@@ -268,9 +268,9 @@ const Recuit = withAuth((props) => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+            {/* <Typography id="modal-modal-title" variant="h6" component="h2">
               Recommendation Details
-            </Typography>
+            </Typography> */}
             <Typography id="modal-modal-description">
               <Stack direction="column" sx={{ marginBottom: 5, border: 1 }}>
                 <Stack direction="row" sx={{ margin: 5 }}>
@@ -288,12 +288,17 @@ const Recuit = withAuth((props) => {
                       年齢　{selectedRecommendation.userInfo.age}
                     </Typography>
                     <Typography>
-                      性別　{selectedRecommendation.userInfo.sex}
+                      性別　
+                      {selectedRecommendation.userInfo.sex === "male"
+                        ? "男性"
+                        : selectedRecommendation.userInfo.sex === "female"
+                        ? "女性"
+                        : "その他"}
                     </Typography>
                   </Box>
                 </Stack>
                 <Stack direction="row" marginBottom={5} marginLeft={5}>
-                  <Typography>ffffffffffffff</Typography>
+                  <Typography variant="h4">平均評価　　</Typography>
                   <TextRating />
                 </Stack>
               </Stack>
@@ -301,18 +306,18 @@ const Recuit = withAuth((props) => {
                 <Stack direction="row" sx={{ marginBottom: 5, marginLeft: 5 }}>
                   <Stack direction="column">
                     <TextRating />
-                    <Typography>name</Typography>
-                    <Typography>time</Typography>
+                    <Typography>評価した人の名</Typography>
+                    <Typography>評価した時間</Typography>
                   </Stack>
-                  <Stack>comment</Stack>
+                  <Stack>コメント</Stack>
                 </Stack>
                 <Stack direction="row" sx={{ marginBottom: 5, marginLeft: 5 }}>
                   <Stack direction="column">
                     <TextRating />
-                    <Typography>name</Typography>
-                    <Typography>time</Typography>
+                    <Typography>評価した人の名</Typography>
+                    <Typography>評価した時間</Typography>
                   </Stack>
-                  <Stack>comment</Stack>
+                  <Stack>コメント</Stack>
                 </Stack>
               </Stack>
             </Typography>

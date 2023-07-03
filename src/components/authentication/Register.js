@@ -17,7 +17,6 @@ import Logo from "../logo/Logo";
 
 function Register() {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     role: "",
     password: "",

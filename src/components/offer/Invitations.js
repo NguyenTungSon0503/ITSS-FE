@@ -41,7 +41,6 @@ const Invitations = withAuth((props) => {
         console.error(error);
       });
   };
-
   const handleRejectButton = async (invitation) => {
     const data = { invitation_id: invitation.invitationInfor.id };
     const res = await axios.post(
@@ -122,13 +121,13 @@ const Invitations = withAuth((props) => {
                     </TableCell>
 
                     <TableCell>
-                      <Typography>
+                      <Typography sx={{ marginBottom: 4 }}>
                         名前　{invitation.userInfo.user_name}
                       </Typography>
-                      <Typography>
+                      <Typography sx={{ marginBottom: 4 }}>
                         年齢　{invitation.userInfo.age}
-                      </Typography>
-                      <Typography>
+                      </Typography >
+                      <Typography >
                         性別　
                         {invitation.invitationInfor.sex === "male"
                           ? "男性"
@@ -139,7 +138,7 @@ const Invitations = withAuth((props) => {
                     </TableCell>
 
                     <TableCell>
-                      <Typography>
+                      <Typography sx={{ marginBottom: 5 }}>
                         食事の価格帯{" "}
                         {invitation.invitationInfor.meal_price_range}
                       </Typography>

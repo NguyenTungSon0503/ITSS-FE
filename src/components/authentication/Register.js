@@ -164,33 +164,35 @@ function Register() {
       >
         <Box flex={4}>
           <Stack direction="column" margin={5} spacing={1}>
-            <Box><Logo/></Box>
+            <Box>
+              <Logo />
+            </Box>
             <Typography sx={{ fontWeight: "bold", fontSize: 30 }}>
-              Sign up
+              サインアップ
             </Typography>
 
             <Stack direction="row">
               <Box flex={1}>
-                <Typography >Nation</Typography>
+                <Typography>国籍</Typography>
               </Box>
 
               <Box flex={1}>
-              <FormControl   fullWidth>
-                <InputLabel id="role-label">Role</InputLabel>
-                <Select
-                  labelId="role-label"
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="partner">Vietnamese</MenuItem>
-                  <MenuItem value="user">Japanese</MenuItem>
-                </Select>
-              </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="role-label">国籍</InputLabel>
+                  <Select
+                    labelId="role-label"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="user">日本</MenuItem>
+                    <MenuItem value="partner">Vietnamese</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
             </Stack>
 
-            <Typography>Email address</Typography>
+            <Typography>メールアドレス</Typography>
             <TextField
               variant="standard"
               type="text"
@@ -199,7 +201,7 @@ function Register() {
               onChange={handleChange}
             />
 
-            <Typography>Password</Typography>
+            <Typography>パスワード</Typography>
             <TextField
               variant="standard"
               type="password"
@@ -208,7 +210,7 @@ function Register() {
               onChange={handleChange}
             />
 
-            <Typography>Confirm Password</Typography>
+            <Typography>パスワード確認</Typography>
             <TextField
               variant="standard"
               type="password"
@@ -219,10 +221,14 @@ function Register() {
             />
 
             <Button
-              style={{ backgroundColor: "#FF6C02", color: "white", marginTop: 20 }}
+              style={{
+                backgroundColor: "#FF6C02",
+                color: "white",
+                marginTop: 20,
+              }}
               onClick={handleSubmit}
             >
-              Sign up
+              登録
             </Button>
           </Stack>
         </Box>

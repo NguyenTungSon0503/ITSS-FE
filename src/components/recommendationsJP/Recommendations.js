@@ -21,6 +21,7 @@ import TextRating from "../emoji/Rating";
 
 const Recuit = withAuth((props) => {
   const [data, setData] = useState({});
+  const [review, setReview] = useState({});
   const navigate = useNavigate();
   const [selectedInvitation, setSelectedInvitation] = useState(null);
   const [selectedRecommendation, setSelectedRecommendation] = useState(null);
@@ -73,6 +74,28 @@ const Recuit = withAuth((props) => {
         console.error(error);
       });
   }, [props.accessToken, navigate]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/review/user", {
+        headers: {
+          authorization: `Bearer ${props.accessToken}`,
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        setReview(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 403) {
+          navigate("/login");
+        }
+        console.error(error);
+      });
+  }, [props.accessToken, navigate]);
+
+  console.log(review);
 
   const handleAccept = (recommendation_id) => {
     const sendData = { recommendation_id };
@@ -179,11 +202,11 @@ const Recuit = withAuth((props) => {
                             </Stack>
                           </TableCell>
 
-                          <TableCell>
-                            <Typography sx={{ marginBottom: 1 }}>
+                          <TableCell >
+                            <Typography sx={{ marginBottom: 3 }}>
                               名前　{recommendation.userInfo.user_name}
                             </Typography>
-                            <Typography sx={{ marginBottom: 1 }}>
+                            <Typography sx={{ marginBottom: 3 }}>
                               年齢　{recommendation.userInfo.age}
                             </Typography>
                             <Typography>
@@ -197,19 +220,19 @@ const Recuit = withAuth((props) => {
                           </TableCell>
 
                           <TableCell>
-                            <Typography>
+                            <Typography sx={{ marginBottom: 5 }}>
                               食事の価格帯　
                               {recommendation.recommendationInfo.food_recommend}
                             </Typography>
-                            <Typography>
+                            <Typography >
                               説明　 <br />
                               {recommendation.recommendationInfo.description}
                             </Typography>
                           </TableCell>
 
                           <TableCell>
-                            <Typography sx={{ textAlign: "center" }}>
-                              説明 <br />
+                            <Typography sx={{ textAlign: "center", marginBottom: 4 }}>
+                              価格 <br />
                               {recommendation.recommendationInfo.meal_price}
                             </Typography>
                           </TableCell>

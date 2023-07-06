@@ -56,16 +56,16 @@ function Login() {
           <Stack direction="column" spacing={4} margin={5}>
           <Box sx={{marginLeft: 23}}><Logo/></Box>
             <Typography sx={{ fontWeight: "bold", fontSize: 30 }}>
-              Sign in
+              サインイン
             </Typography>
-            <Typography>line</Typography>
+            <Typography>ログインしてウェブサイトを続ける</Typography>
             <TextField
               variant="standard"
               type="text"
               name="email"
               value={formData.email || ""}
               onChange={handleInputChange}
-              label="email address"
+              placeholder="メールアドレス"
             />
             <TextField
               variant="standard"
@@ -73,14 +73,14 @@ function Login() {
               name="password"
               value={formData.password || ""}
               onChange={handleInputChange}
-              label="password"
+              placeholder="パスワード"
             />
 
             <Button
               style={{ backgroundColor: "#FF6C02", color: "white" }}
               onClick={handleSubmit}
             >
-              Sign in
+              サインイン
             </Button>
           </Stack>
         </Box>

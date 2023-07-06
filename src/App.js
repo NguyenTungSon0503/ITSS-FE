@@ -14,7 +14,7 @@ import GetOffer from "./components/offer/AllOffer";
 import GetOfferTest from "./components/offer/Invitations_NoSort";
 import HomePage from "./components/HomePage";
 import Invitations from "./components/offer/Invitations";
-
+import Chat from "./components/chat/chat";
 import ResponsiveAppBar from "./components/Navbar/Navbar";
 import Recommend from "./components/offer/Recommend";
 import Recuit from "./components/recommendationsJP/Recommendations";
@@ -46,6 +46,7 @@ const App = () => {
         <Route path="/recuit" element={<Recuit />} />
         <Route path="/contracts" element={ <Contracts /> }/>
         <Route path="/contracts/partner" element={ <ContractsPartner /> }/>
+        <Route path="/chat" element={ <Chat /> }/>
 
         </Routes>
     </BrowserRouter>

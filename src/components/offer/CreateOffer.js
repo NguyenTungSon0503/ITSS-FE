@@ -85,7 +85,7 @@ const Offer = withAuth((props) => {
     ) {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/offers",
+          "http://20.189.73.135:5000/api/offers",
           formData,
           {
             headers: {

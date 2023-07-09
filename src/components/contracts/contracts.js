@@ -11,7 +11,7 @@ const Contracts = withAuth((props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/contracts/user", {
+      .get("http://20.189.73.135:5000/api/contracts/user", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },

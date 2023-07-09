@@ -19,7 +19,7 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:5000/api/auth/login", formData)
+      .post("http://20.189.73.135:5000/api/auth/login", formData)
       .then((response) => {
         setData([...data, response.data]);
         setFormData({});

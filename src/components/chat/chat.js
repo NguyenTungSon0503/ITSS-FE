@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import socketIOClient from "socket.io-client";
 import "./chat.css";
 
-const host = "http://localhost:5001";
+const host = "http://20.189.73.135:5001";
 
 function Chat() {
   const [mess, setMess] = useState([]);

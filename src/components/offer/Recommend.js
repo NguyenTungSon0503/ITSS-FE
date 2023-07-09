@@ -19,7 +19,7 @@ const Recommend = withAuth((props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/users", {
+      .get("http://20.189.73.135:5000/api/users", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -44,7 +44,7 @@ const Recommend = withAuth((props) => {
     // console.log(requestData);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/recommendations",
+        "http://20.189.73.135:5000/api/recommendations",
         requestData,
         {
           headers: {

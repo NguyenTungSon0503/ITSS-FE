@@ -72,7 +72,7 @@ function Register() {
     try {
       console.log(formData);
       const response = await axios.post(
-        "http://localhost:5000/api/users",
+        "http://20.189.73.135:5000/api/users",
         formData
       );
       console.log(response.data);

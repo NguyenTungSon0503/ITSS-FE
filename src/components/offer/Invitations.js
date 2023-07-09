@@ -25,7 +25,7 @@ const Invitations = withAuth((props) => {
   }, [props.accessToken]);
   const fetchInvitationsData = () => {
     axios
-      .get("http://localhost:5000/api/offers/invitations", {
+      .get("http://20.189.73.135:5000/api/offers/invitations", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -44,7 +44,7 @@ const Invitations = withAuth((props) => {
   const handleRejectButton = async (invitation) => {
     const data = { invitation_id: invitation.invitationInfor.id };
     const res = await axios.post(
-      "http://localhost:5000/api/offers/reject",
+      "http://20.189.73.135:5000/api/offers/reject",
       data,
       {
         headers: {

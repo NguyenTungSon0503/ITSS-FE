@@ -42,7 +42,7 @@ const Upload = withAuth((props) => {
   const uploadImage = async (base64EncodedImage) => {
     try {
       await axios.post(
-        "http://localhost:5000/api/images",
+        "http://20.189.73.135:5000/api/images",
         { data: base64EncodedImage },
         {
           headers: {

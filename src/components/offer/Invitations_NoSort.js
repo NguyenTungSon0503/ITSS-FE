@@ -21,7 +21,7 @@ const GetOfferTest = withAuth((props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/offers/partner_offer", {
+      .get("http://20.189.73.135:5000/api/offers/partner_offer", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },

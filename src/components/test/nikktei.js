@@ -44,7 +44,7 @@ function ScheduleManage({ data, className, token }) {
     console.log(token);
     try {
       const res = axios
-        .post("http://localhost:5000/api/contracts/review", reviews, {
+        .post("http://20.189.73.135:5000/api/contracts/review", reviews, {
           headers: {
             authorization: `Bearer ${token}`,
           },

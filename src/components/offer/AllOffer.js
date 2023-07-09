@@ -19,7 +19,7 @@ const GetOffer = withAuth((props) => {
   // console.log(offerData)
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/offers/all_offers", {
+      .get("http://20.189.73.135:5000/api/offers/all_offers", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },

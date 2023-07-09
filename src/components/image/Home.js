@@ -8,7 +8,7 @@ const Home = withAuth((props) => {
   const [imageId, setImageIds] = useState();
   const loadImages = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/images", {
+      const res = await axios.get("http://20.189.73.135:5000/api/images", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },

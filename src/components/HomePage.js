@@ -10,7 +10,7 @@ const  HomePage = withAuth((props) =>{
 
  useEffect(() => {
    axios
-     .get("http://localhost:5000/api/users", {
+     .get("http://20.189.73.135:5000/api/users", {
        headers: {
          authorization: `Bearer ${props.accessToken}`,
        },

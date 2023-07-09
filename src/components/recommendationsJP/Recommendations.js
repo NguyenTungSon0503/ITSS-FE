@@ -56,7 +56,7 @@ const Recuit = withAuth((props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/recommendations", {
+      .get("http://20.189.73.135:5000/api/recommendations", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -78,7 +78,7 @@ const Recuit = withAuth((props) => {
   useEffect(() => {
     const partner_id = partnerID;
     axios
-      .post("http://localhost:5000/api/review/partner", {
+      .post("http://20.189.73.135:5000/api/review/partner", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
@@ -100,7 +100,7 @@ const Recuit = withAuth((props) => {
   const handleAccept = (recommendation_id) => {
     const sendData = { recommendation_id };
     axios
-      .post("http://localhost:5000/api/contracts", sendData, {
+      .post("http://20.189.73.135:5000/api/contracts", sendData, {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },

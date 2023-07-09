@@ -49,8 +49,8 @@ const labels = {
   5: "Excellent+",
 };
 
-export default function TextRating() {
-  const [value, setValue] = React.useState(3.5);
+export default function TextRating(props) {
+  const {star} = props;
   // console.log(value);
   return (
     <Box
@@ -64,11 +64,8 @@ export default function TextRating() {
       <Rating
         name="read-only"
         readOnly
-        value={value}
+        value={star}
         precision={0.5}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
       />
       {/* <Box sx={{ ml: 2 }}>{labels[value]}</Box> */}

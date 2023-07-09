@@ -97,8 +97,6 @@ const Recuit = withAuth((props) => {
       });
   }, [partnerID]);
 
-  console.log(review);
-
   const handleAccept = (recommendation_id) => {
     const sendData = { recommendation_id };
     axios
@@ -121,9 +119,6 @@ const Recuit = withAuth((props) => {
 
   return (
     <div>
-      <ul>
-        <pre>{JSON.stringify(review, null, 2)}</pre>
-      </ul>
 
       <Stack direction="row" margin={5} sx={{ border: 1, minHeight: 800 }}>
         <Box flex={1} sx={{ borderRight: 1 }}>
@@ -338,9 +333,9 @@ const Recuit = withAuth((props) => {
                     sx={{ marginBottom: 5, marginLeft: 5 }}
                   >
                     <Stack direction="column">
-                      <TextRating value={item.recommendation_sender_rating} />
+                      <TextRating star={item.recommendation_sender_rating} />
                       <Typography>{item.name}</Typography>
-                      <Typography>評価した時間</Typography>
+                      <Typography>{item.updated_at.split("T")[0]}</Typography>
                     </Stack>
                     <Stack direction="column">
                       <Typography>コメント</Typography>

@@ -287,7 +287,7 @@ const Recuit = withAuth((props) => {
         </Box>
       </Stack>
 
-      {selectedRecommendation && review && review[0] && (
+      {selectedRecommendation &&  (
         <Modal
           open={open}
           onClose={handleClose}
@@ -329,6 +329,7 @@ const Recuit = withAuth((props) => {
                   <TextRating />
                 </Stack>
               </Stack>
+              {review && review[0] ? 
               <Stack direction="column">
                 {review.map((item) => (
                   <Stack
@@ -348,6 +349,7 @@ const Recuit = withAuth((props) => {
                   </Stack>
                 ))}
               </Stack>
+              :<></>}
             </Typography>
           </Box>
         </Modal>

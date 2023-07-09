@@ -58,6 +58,7 @@ export default function TextRating() {
         width: 200,
         display: "flex",
         alignItems: "right",
+        justifyContent: "center",
       }}
     >
       <Rating

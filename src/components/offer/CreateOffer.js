@@ -40,8 +40,8 @@ const Offer = withAuth((props) => {
     setFormData({ ...formData, [name]: value });
     // console.log(typeof formData.hour_start);
   };
-  const blockInvalidChar = e => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault(); 
-
+  const blockInvalidChar = (e) =>
+    ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
 
   const handleCancelButton = (event) => {
     if (
@@ -81,8 +81,7 @@ const Offer = withAuth((props) => {
   };
   const handleSubmit = async () => {
     if (
-      validateTime(formData.hour_start, formData.hour_end) === 1 &&
-      validateDate(formData.date) === 1
+      validateTime(formData.hour_start, formData.hour_end, formData.date) === 1
     ) {
       try {
         const res = await axios.post(
@@ -111,17 +110,23 @@ const Offer = withAuth((props) => {
   };
   // startTime < endTime
   // startTime > timeNow
-
   //handle when startTime > endTime
-  function validateTime(startTime, endTime) {
+
+  function validateTime(startTime, endTime, originalDate) {
+    var date = new Date(originalDate);
+    date.setUTCHours(date.getUTCHours() + 7);
+    let updatedIsoDate = date.toISOString();
+    const dayMonthYear = updatedIsoDate.split("T")[0];
+    const timeStartString = `${dayMonthYear}T${startTime}:00.000Z`;
+    const timeStart = new Date(timeStartString);
+    const timeStartEpoch = timeStart.getTime();
     const arrayStart = startTime.split(":");
     const arrayEnd = endTime.split(":");
     const startTimeSecond = arrayStart[0] * 3600 + arrayStart[1] * 60;
     const endTimeSecond = arrayEnd[0] * 3600 + arrayEnd[1] * 60;
     const timeNow = new Date();
-    const timeNowSecond =
-      parseInt(timeNow.getHours() * 3600) + parseInt(timeNow.getMinutes() * 60);
-    if (startTimeSecond < timeNowSecond) {
+    const timeNowEpoch = timeNow.getTime();
+    if (timeStartEpoch < timeNowEpoch) {
       alert("開始時刻は現在時刻以上でなければなりません。");
       return 0;
     } else {
@@ -136,18 +141,6 @@ const Offer = withAuth((props) => {
 
   //handle when date > now
 
-  function validateDate(date) {
-    const dateTime = new Date(date);
-    const epochTime = dateTime.getTime();
-    const timeNow = new Date();
-    const epochNow = timeNow.getTime();
-    if (epochTime < epochNow) {
-      alert("日付は今日以上でなければなりません。");
-      return 0;
-    } else {
-      return 1;
-    }
-  }
   return (
     <div style={{ width: "100%", backgroundColor: "#FFFFFF" }}>
       <CustomAlert alertData={alertData} />

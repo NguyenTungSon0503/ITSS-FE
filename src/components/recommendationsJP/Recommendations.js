@@ -121,9 +121,6 @@ const Recuit = withAuth((props) => {
 
   return (
     <div>
-      <ul>
-        <pre>{JSON.stringify(review, null, 2)}</pre>
-      </ul>
 
       <Stack direction="row" margin={5} sx={{ border: 1, minHeight: 800 }}>
         <Box flex={1} sx={{ borderRight: 1 }}>

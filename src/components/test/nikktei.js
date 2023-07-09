@@ -9,9 +9,11 @@ import DialogContent from "@mui/material/DialogContent";
 import { Rating } from "@mui/material";
 import { Image } from "cloudinary-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ScheduleManage({ data, className, token }) {
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -116,10 +118,7 @@ function ScheduleManage({ data, className, token }) {
           </DialogActions>
         </Dialog>
       </div>
-      <div
-        className={`${className} row-gap-0 schedule-manager`}
-        onClick={handleClickOpen}
-      >
+      <div className={`${className} row-gap-0 schedule-manager`}>
         <div className="col col-2 date-time">
           <span className="">{data.date.split("T")[0]}</span>
           <span>
@@ -176,11 +175,24 @@ function ScheduleManage({ data, className, token }) {
               </div>
             </div>
             <div className="manage-btn">
-              <Button variant="contained" className="btn btn-accept">
+              <Button
+                variant="contained"
+                className="btn btn-accept"
+                onClick={() => navigate("/chat")}
+              >
                 チャット
               </Button>
-              <Button variant="contained" className="btn btn-accept">
-                キャンセル
+              <Button
+                variant="contained"
+                className="btn btn-accept"
+                onClick={(event) => {
+                  if (className === "schedule2") {
+                    event.stopPropagation();
+                    handleClickOpen();
+                  }
+                }}
+              >
+                {className === "schedule1" ? "キャンセル" : "評価"}
               </Button>
             </div>
           </div>

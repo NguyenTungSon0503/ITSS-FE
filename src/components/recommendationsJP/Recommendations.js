@@ -21,7 +21,7 @@ import TextRating from "../emoji/Rating";
 
 const Recuit = withAuth((props) => {
   const [data, setData] = useState({});
-  const [review, setReview] = useState({});
+  const [review, setReview] = useState([]);
   const navigate = useNavigate();
   const [selectedInvitation, setSelectedInvitation] = useState(null);
   const [selectedRecommendation, setSelectedRecommendation] = useState(null);
@@ -121,9 +121,9 @@ const Recuit = withAuth((props) => {
 
   return (
     <div>
-      {/* <ul>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      </ul> */}
+      <ul>
+        <pre>{JSON.stringify(review, null, 2)}</pre>
+      </ul>
 
       <Stack direction="row" margin={5} sx={{ border: 1, minHeight: 800 }}>
         <Box flex={1} sx={{ borderRight: 1 }}>
@@ -287,7 +287,7 @@ const Recuit = withAuth((props) => {
         </Box>
       </Stack>
 
-      {selectedRecommendation && (
+      {selectedRecommendation && review && review[0] && (
         <Modal
           open={open}
           onClose={handleClose}
@@ -330,22 +330,23 @@ const Recuit = withAuth((props) => {
                 </Stack>
               </Stack>
               <Stack direction="column">
-                <Stack direction="row" sx={{ marginBottom: 5, marginLeft: 5 }}>
-                  <Stack direction="column">
-                    <TextRating />
-                    <Typography>評価した人の名</Typography>
-                    <Typography>評価した時間</Typography>
+                {review.map((item) => (
+                  <Stack
+                    key={item.id}
+                    direction="row"
+                    sx={{ marginBottom: 5, marginLeft: 5 }}
+                  >
+                    <Stack direction="column">
+                      <TextRating value={item.recommendation_sender_rating} />
+                      <Typography>{item.name}</Typography>
+                      <Typography>評価した時間</Typography>
+                    </Stack>
+                    <Stack direction="column">
+                      <Typography>コメント</Typography>
+                      <Typography>{item.recommendation_sender_cmt}</Typography>
+                    </Stack>
                   </Stack>
-                  <Stack>コメント</Stack>
-                </Stack>
-                <Stack direction="row" sx={{ marginBottom: 5, marginLeft: 5 }}>
-                  <Stack direction="column">
-                    <TextRating />
-                    <Typography>評価した人の名</Typography>
-                    <Typography>評価した時間</Typography>
-                  </Stack>
-                  <Stack>コメント</Stack>
-                </Stack>
+                ))}
               </Stack>
             </Typography>
           </Box>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import Logo from "../logo/Logo";
 
@@ -27,7 +27,7 @@ function Login() {
         cookies.set("accessToken", response.data.accessToken, { path: "/" });
         cookies.set("refreshToken", response.data.refreshToken, { path: "/" });
         console.log("Login successful");
-        navigate("/get_user");
+        navigate("/");
       })
       .catch((error) => {
         console.error(error);
@@ -82,6 +82,7 @@ function Login() {
             >
               サインイン
             </Button>
+            <Button href="/register">アカウントがありませんか？ここで登録します</Button>
           </Stack>
         </Box>
 

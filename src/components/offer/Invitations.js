@@ -126,14 +126,31 @@ const Invitations = withAuth((props) => {
                       </Typography>
                       <Typography sx={{ marginBottom: 4 }}>
                         年齢　{invitation.userInfo.age}
-                      </Typography >
-                      <Typography >
+                      </Typography>
+                      <Typography>
                         性別　
+                        {invitation.userInfo.sex === "male"
+                          ? "男性"
+                          : invitation.userInfo.sex === "female"
+                          ? "女性"
+                          : "その他"}
+                      </Typography>
+                    </TableCell>
+
+                    <TableCell>
+                      <Typography sx={{ marginBottom: 4 }}>
+                        欲しい年齢　{invitation.invitationInfor.age}
+                      </Typography>
+                      <Typography sx={{ marginBottom: 4 }}>
+                        欲しい性別　
                         {invitation.invitationInfor.sex === "male"
                           ? "男性"
                           : invitation.invitationInfor.sex === "female"
                           ? "女性"
                           : "その他"}
+                      </Typography>
+                      <Typography>
+                        欲しい場所　{invitation.invitationInfor.location}
                       </Typography>
                     </TableCell>
 

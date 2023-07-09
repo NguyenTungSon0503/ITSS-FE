@@ -1,48 +1,47 @@
-import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
-const pages = [
-  { label: 'オファー選び', path: '/invitations' },
-  { label: 'チャット', path: '/chat' },
-  { label: '予定管理', path: '/contracts/partner' },
+const partnerPages = [
+  { label: "オファー選び", path: "/invitations" },
+  { label: "チャット", path: "/chat" },
+  { label: "予定管理", path: "/contracts/partner" },
+];
 
-  { label: 'Login', path: '/login'},
-  { label: 'Register', path: '/register'},
+const guestPages = [
+  { label: "ログイン", path: "/login" },
+  { label: "登録", path: "/register" },
 ];
 
 const userPages = [
-  { label: 'オファー', path: '/offer'},
-  { label: 'チャット', path: '/chat' },
-  { label: '予定管理', path: '/contracts'},
-  { label: 'おすすめ選び', path: '/recuit' },
+  { label: "オファー", path: "/offer" },
+  { label: "チャット", path: "/chat" },
+  { label: "予定管理", path: "/contracts" },
+  { label: "おすすめ選び", path: "/recuit" },
+];
 
-  { label: 'Login', path: '/login'},
-  { label: 'Register', path: '/register'},
-
-]
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
+  const cookies = new Cookies();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
 
-  const role = localStorage.getItem('role')
-  console.log(role)
+  const role = cookies.get("role");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -65,11 +64,14 @@ function ResponsiveAppBar() {
     handleCloseNavMenu();
   };
 
+  if (!role) {
+    return null;
+  }
+
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#e8894e' }}>
+    <AppBar position="static" sx={{ backgroundColor: "#e8894e" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -77,18 +79,17 @@ function ResponsiveAppBar() {
             href="/"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
-            LOGO
+            <img src="logo.png" width={120} height={60}></img>
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -103,53 +104,58 @@ function ResponsiveAppBar() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.label} onClick={() => handleNavigation(page.path)}>
+              {guestPages.map((page) => (
+                <MenuItem
+                  key={page.label}
+                  onClick={() => handleNavigation(page.path)}
+                >
                   <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-
-          <Box sx={{ flexGrow: 1 }} /> {/* Add this empty box to push the buttons to the right */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-        {role === 'user' ? (
-          userPages.map((page) => (
-            <Button
-              key={page.label}
-              onClick={() => handleNavigation(page.path)}
-              sx={{ mx: 1, color: 'white' }}
-            >
-              {page.label}
-            </Button>
-          ))
-        ) : (
-          pages.map((page) => (
-            <Button
-              key={page.label}
-              onClick={() => handleNavigation(page.path)}
-              sx={{ mx: 1, color: 'white' }}
-            >
-              {page.label}
-            </Button>
-          ))
-        )}
-      </Box>
-
+          <Box sx={{ flexGrow: 1 }} />{" "}
+          {/* Add this empty box to push the buttons to the right */}
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {role === "user" &&
+              userPages.map((page) => (
+                <Button
+                  key={page.label}
+                  onClick={() => handleNavigation(page.path)}
+                  sx={{ mx: 1, color: "white" }}
+                >
+                  <Typography textAlign="lef" variant="h6">
+                    {page.label}
+                  </Typography>
+                </Button>
+              ))}
+            {role === "partner" &&
+              partnerPages.map((page) => (
+                <Button
+                  key={page.label}
+                  onClick={() => handleNavigation(page.path)}
+                  sx={{ mx: 1, color: "white" }}
+                >
+                  <Typography textAlign="lef" variant="h6">
+                    {page.label}
+                  </Typography>
+                </Button>
+              ))}
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -157,17 +163,17 @@ function ResponsiveAppBar() {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}

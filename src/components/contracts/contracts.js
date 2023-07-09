@@ -19,7 +19,6 @@ const Contracts = withAuth((props) => {
       })
       .then((response) => {
         setData(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         if (error.response.status === 403) {
@@ -29,6 +28,32 @@ const Contracts = withAuth((props) => {
       });
   }, [props.accessToken]);
 
+  const nowSchedule = [];
+  const datedSchedule = [];
+
+  const contractsDate = (date, time) => {
+    const newDate = new Date(date);
+    const [hours, minutes] = time.split(":");
+    newDate.setUTCHours(hours);
+    newDate.setUTCMinutes(minutes);
+    newDate.setUTCSeconds(0);
+    newDate.setUTCMilliseconds(0);
+    return newDate.toISOString();
+  };
+
+  data?.map((contract) => {
+    const dateContract = contractsDate(contract.date, contract.start_time);
+    const timestamp = new Date(dateContract);
+    const expochTime = timestamp.getTime();
+    const timeNow = new Date();
+    const expochTimeNow = timeNow.getTime();
+    if (expochTime < expochTimeNow) {
+      datedSchedule.push(contract);
+    } else {
+      nowSchedule.push(contract);
+    }
+  });
+
   return (
     <div>
       <div className="manage-page">
@@ -36,9 +61,14 @@ const Contracts = withAuth((props) => {
           <span className="publicsans-normal-charade-16px">次の食事</span>
         </div>
 
-        {data?.map((item) => (
+        {nowSchedule?.map((item) => (
           <>
-            <ScheduleManage key={item.id} data={item} token={props.accessToken} className="schedule1" />
+            <ScheduleManage
+              key={item.id}
+              data={item}
+              token={props.accessToken}
+              className="schedule1"
+            />
           </>
         ))}
 
@@ -47,7 +77,7 @@ const Contracts = withAuth((props) => {
             過去の食事を評価ことができます{" "}
           </span>
         </div>
-        {data?.map((item) => (
+        {datedSchedule?.map((item) => (
           <>
             <ScheduleManage
               key={item.id}

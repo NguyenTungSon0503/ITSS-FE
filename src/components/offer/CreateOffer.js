@@ -64,7 +64,7 @@ const Offer = withAuth((props) => {
         location: "",
         note: "",
       });
-      navigate("/homepage");
+      navigate("/");
     } else {
       alert("キャンセルしますか？");
       setFormData({
@@ -101,7 +101,7 @@ const Offer = withAuth((props) => {
           type: "success",
         });
         setTimeout(() => {
-          navigate("/homepage");
+          navigate("/");
         }, 2000);
         console.log(res.data);
       } catch (err) {

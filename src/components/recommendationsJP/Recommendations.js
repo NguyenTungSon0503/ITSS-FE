@@ -62,8 +62,6 @@ const Recuit = withAuth((props) => {
       })
       .then((response) => {
         setData(response.data);
-        console.log(response.data);
-
         const firstInvitationId = Object.keys(response.data)[0];
         setSelectedInvitation(firstInvitationId);
       })
@@ -77,7 +75,7 @@ const Recuit = withAuth((props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/review/user", {
+      .get("http://localhost:5000/api/review/partner", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },

@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { withAuth } from "./Login";
 import { useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
+
 const GetUser = withAuth((props) => {
   const [userData, setUserData] = useState({});
    const navigate = useNavigate();
+   const cookies = new Cookies();
 
   useEffect(() => {
     axios
@@ -16,8 +19,7 @@ const GetUser = withAuth((props) => {
       })
       .then((response) => {
         setUserData(response.data);
-        localStorage.setItem('role', response.data.users.role)
-        console.log(response.data);
+        cookies.set('role', response.data.users.role)
       })
       .catch((error) => {
         if(error.response.status === 403){

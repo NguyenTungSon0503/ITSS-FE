@@ -116,7 +116,7 @@ const Invitations = withAuth((props) => {
                           width="150"
                           crop="scale"
                         />
-                        <TextRating />
+                        <TextRating star={3} />
                       </Stack>
                     </TableCell>
 

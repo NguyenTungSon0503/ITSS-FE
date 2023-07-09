@@ -195,7 +195,7 @@ const Recuit = withAuth((props) => {
                                 width="150"
                                 crop="scale"
                               />
-                              <TextRating />
+                              <TextRating star={3} />
                             </Stack>
                           </TableCell>
 
@@ -321,7 +321,7 @@ const Recuit = withAuth((props) => {
                 </Stack>
                 <Stack direction="row" marginBottom={5} marginLeft={5}>
                   <Typography variant="h4">平均評価　　</Typography>
-                  <TextRating />
+                  <TextRating star={3} />
                 </Stack>
               </Stack>
               {review && review[0] ? 
@@ -334,8 +334,8 @@ const Recuit = withAuth((props) => {
                   >
                     <Stack direction="column">
                       <TextRating star={item.recommendation_sender_rating} />
-                      <Typography>{item.name}</Typography>
-                      <Typography>{item.updated_at.split("T")[0]}</Typography>
+                      <Typography sx={{marginLeft: 5}}>{item.name}</Typography>
+                      <Typography sx={{marginLeft: 5}}>{item.updated_at.split("T")[0]}</Typography>
                     </Stack>
                     <Stack direction="column">
                       <Typography>コメント</Typography>

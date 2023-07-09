@@ -27,11 +27,13 @@ const Recuit = withAuth((props) => {
   const [selectedRecommendation, setSelectedRecommendation] = useState(null);
 
   const [open, setOpen] = React.useState(false);
+  const [partnerID, setPartnerID] = useState(0);
   const handleOpen = (recommendation) => {
     setSelectedRecommendation(recommendation);
     setOpen(true);
+    setPartnerID(recommendation.userInfo.user_id);
   };
-
+  console.log(partnerID);
   const handleClose = () => {
     setOpen(false);
   };
@@ -74,11 +76,13 @@ const Recuit = withAuth((props) => {
   }, [props.accessToken, navigate]);
 
   useEffect(() => {
+    const partner_id = partnerID;
     axios
-      .get("http://localhost:5000/api/review/partner", {
+      .post("http://localhost:5000/api/review/partner", {
         headers: {
           authorization: `Bearer ${props.accessToken}`,
         },
+        partner_id,
         withCredentials: true,
       })
       .then((response) => {
@@ -91,7 +95,7 @@ const Recuit = withAuth((props) => {
         }
         console.error(error);
       });
-  }, [props.accessToken, navigate]);
+  }, [partnerID]);
 
   console.log(review);
 
@@ -200,7 +204,7 @@ const Recuit = withAuth((props) => {
                             </Stack>
                           </TableCell>
 
-                          <TableCell >
+                          <TableCell>
                             <Typography sx={{ marginBottom: 3 }}>
                               名前　{recommendation.userInfo.user_name}
                             </Typography>
@@ -222,14 +226,16 @@ const Recuit = withAuth((props) => {
                               食事の価格帯　
                               {recommendation.recommendationInfo.food_recommend}
                             </Typography>
-                            <Typography >
+                            <Typography>
                               説明　 <br />
                               {recommendation.recommendationInfo.description}
                             </Typography>
                           </TableCell>
 
                           <TableCell>
-                            <Typography sx={{ textAlign: "center", marginBottom: 4 }}>
+                            <Typography
+                              sx={{ textAlign: "center", marginBottom: 4 }}
+                            >
                               価格 <br />
                               {recommendation.recommendationInfo.meal_price}
                             </Typography>

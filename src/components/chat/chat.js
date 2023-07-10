@@ -75,10 +75,10 @@ function Chat() {
           value={message}
           onKeyDown={onEnterPress}
           onChange={handleChange}
-          placeholder="Nhập tin nhắn ..."
+          placeholder="メッセージを入力してください。"
         />
         <button className="buttonchat" onClick={sendMessage}>
-          Send
+          送る
         </button>
       </div>
     </div>

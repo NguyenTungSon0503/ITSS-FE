@@ -209,7 +209,7 @@ const Recuit = withAuth((props) => {
                                 width="150"
                                 crop="scale"
                               />
-                              <TextRating star={3} />
+                              <TextRating star={review[0]?.rating} />
                             </Stack>
                           </TableCell>
 
@@ -300,7 +300,7 @@ const Recuit = withAuth((props) => {
         </Box>
       </Stack>
 
-      {selectedRecommendation && (
+      {selectedRecommendation && review && review[0] && (
         <Modal
           open={open}
           onClose={handleClose}
@@ -339,7 +339,7 @@ const Recuit = withAuth((props) => {
                 </Stack>
                 <Stack direction="row" marginBottom={5} marginLeft={5}>
                   <Typography variant="h4">平均評価　　</Typography>
-                  <TextRating star={3} />
+                  <TextRating star={review[0]?.rating} />
                 </Stack>
               </Stack>
               {review && review[0] ? (

@@ -212,6 +212,8 @@ const Recommend = withAuth((props) => {
                         style: { textAlign: "center", fontSize: 20 },
                       },
                     }}
+                    rows={3}
+                    multiline={true}
                     variant="standard"
                     onChange={handleInputChange}
                     name="description"

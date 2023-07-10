@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./style.css";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Divider } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -161,8 +161,19 @@ function ScheduleManage({ data, className, token }) {
                   <div className="infor-item-1x"> {data.food_recommend} </div>
                 </div>
                 <div className="item-field">
-                  <div className="infor-item-2">説明</div>
-                  <div className="infor-item-2x"> {data.description}</div>
+                  <div className="infor-item-2" style={{ minWidth: "32px" }}>
+                    説明
+                  </div>
+                  <div className="infor-item-2x">
+                    <Typography
+                      style={{
+                        wordWrap: "break-word",
+                        maxWidth: 200,
+                      }}
+                    >
+                      {data.description}
+                    </Typography>{" "}
+                  </div>
                 </div>
 
                 <div className="infor-item-2"></div>

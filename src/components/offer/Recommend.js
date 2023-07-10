@@ -1,4 +1,4 @@
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography, TextareaAutosize} from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Image } from "cloudinary-react";

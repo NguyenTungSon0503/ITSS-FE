@@ -33,7 +33,39 @@ const Recuit = withAuth((props) => {
     setOpen(true);
     setPartnerID(recommendation.userInfo.user_id);
   };
-  console.log(partnerID);
+
+  const handleRejectButton = (recommendationId) => {
+    console.log(recommendationId);
+    const sendData = { recommendation_id: recommendationId };
+    axios.post("http://20.189.73.135:5000/api/recommendations/reject", sendData, {
+      headers: {
+        authorization: `Bearer ${props.accessToken}`,
+      },
+      withCredentials: true,
+    });
+    fetchRecommendationsData();
+  };
+  const fetchRecommendationsData = () => {
+    axios
+      .get("http://20.189.73.135:5000/api/recommendations/test", {
+        headers: {
+          authorization: `Bearer ${props.accessToken}`,
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        setData(response.data);
+        const firstInvitationId = Object.keys(response.data)[0];
+        setSelectedInvitation(firstInvitationId);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 403) {
+          navigate("/login");
+        }
+        console.error(error);
+      });
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -55,25 +87,8 @@ const Recuit = withAuth((props) => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://20.189.73.135:5000/api/recommendations", {
-        headers: {
-          authorization: `Bearer ${props.accessToken}`,
-        },
-        withCredentials: true,
-      })
-      .then((response) => {
-        setData(response.data);
-        const firstInvitationId = Object.keys(response.data)[0];
-        setSelectedInvitation(firstInvitationId);
-      })
-      .catch((error) => {
-        if (error.response.status === 403) {
-          navigate("/login");
-        }
-        console.error(error);
-      });
-  }, [props.accessToken, navigate]);
+    fetchRecommendationsData();
+  }, [props.accessToken]);
 
   useEffect(() => {
     const partner_id = partnerID;
@@ -119,7 +134,6 @@ const Recuit = withAuth((props) => {
 
   return (
     <div>
-
       <Stack direction="row" margin={5} sx={{ border: 1, minHeight: 800 }}>
         <Box flex={1} sx={{ borderRight: 1 }}>
           {/* Left sidebar: List of invitations */}
@@ -262,7 +276,11 @@ const Recuit = withAuth((props) => {
                                   backgroundColor: "#FF9A6E",
                                   color: "black",
                                 }}
-                                // onClick={() => handleRejectButton(recommendation.recommendationInfo.id)}
+                                onClick={() =>
+                                  handleRejectButton(
+                                    recommendation.recommendationInfo.id
+                                  )
+                                }
                               >
                                 リジェクト
                               </Button>
@@ -282,7 +300,7 @@ const Recuit = withAuth((props) => {
         </Box>
       </Stack>
 
-      {selectedRecommendation &&  (
+      {selectedRecommendation && (
         <Modal
           open={open}
           onClose={handleClose}
@@ -324,27 +342,35 @@ const Recuit = withAuth((props) => {
                   <TextRating star={3} />
                 </Stack>
               </Stack>
-              {review && review[0] ? 
-              <Stack direction="column">
-                {review.map((item) => (
-                  <Stack
-                    key={item.id}
-                    direction="row"
-                    sx={{ marginBottom: 5, marginLeft: 5 }}
-                  >
-                    <Stack direction="column">
-                      <TextRating star={item.recommendation_sender_rating} />
-                      <Typography sx={{marginLeft: 5}}>{item.name}</Typography>
-                      <Typography sx={{marginLeft: 5}}>{item.updated_at.split("T")[0]}</Typography>
+              {review && review[0] ? (
+                <Stack direction="column">
+                  {review.map((item) => (
+                    <Stack
+                      key={item.id}
+                      direction="row"
+                      sx={{ marginBottom: 5, marginLeft: 5 }}
+                    >
+                      <Stack direction="column">
+                        <TextRating star={item.recommendation_sender_rating} />
+                        <Typography sx={{ marginLeft: 5 }}>
+                          {item.name}
+                        </Typography>
+                        <Typography sx={{ marginLeft: 5 }}>
+                          {item.updated_at.split("T")[0]}
+                        </Typography>
+                      </Stack>
+                      <Stack direction="column">
+                        <Typography>コメント</Typography>
+                        <Typography>
+                          {item.recommendation_sender_cmt}
+                        </Typography>
+                      </Stack>
                     </Stack>
-                    <Stack direction="column">
-                      <Typography>コメント</Typography>
-                      <Typography>{item.recommendation_sender_cmt}</Typography>
-                    </Stack>
-                  </Stack>
-                ))}
-              </Stack>
-              :<></>}
+                  ))}
+                </Stack>
+              ) : (
+                <></>
+              )}
             </Typography>
           </Box>
         </Modal>

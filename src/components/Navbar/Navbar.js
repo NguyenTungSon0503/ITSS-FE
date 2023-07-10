@@ -33,7 +33,7 @@ const userPages = [
   { label: "おすすめ選び", path: "/recuit" },
 ];
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["プロファイル", "ログアウト"];
 
 function ResponsiveAppBar() {
   const cookies = new Cookies();
@@ -42,6 +42,13 @@ function ResponsiveAppBar() {
   const navigate = useNavigate();
 
   const role = cookies.get("role");
+
+  const handleLogout = () => {
+    cookies.remove("accessToken");
+    cookies.remove("refreshToken");
+    cookies.remove("role");
+    navigate("/login");
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -179,7 +186,14 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={
+                    setting === "ログアウト"
+                      ? handleLogout
+                      : handleCloseUserMenu
+                  }
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

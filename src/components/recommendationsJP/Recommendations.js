@@ -37,12 +37,16 @@ const Recuit = withAuth((props) => {
   const handleRejectButton = (recommendationId) => {
     console.log(recommendationId);
     const sendData = { recommendation_id: recommendationId };
-    axios.post("http://20.189.73.135:5000/api/recommendations/reject", sendData, {
-      headers: {
-        authorization: `Bearer ${props.accessToken}`,
-      },
-      withCredentials: true,
-    });
+    axios.post(
+      "http://20.189.73.135:5000/api/recommendations/reject",
+      sendData,
+      {
+        headers: {
+          authorization: `Bearer ${props.accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
     fetchRecommendationsData();
   };
   const fetchRecommendationsData = () => {
@@ -344,29 +348,36 @@ const Recuit = withAuth((props) => {
               </Stack>
               {review && review[0] ? (
                 <Stack direction="column">
-                  {review.map((item) => (
-                    <Stack
-                      key={item.id}
-                      direction="row"
-                      sx={{ marginBottom: 5, marginLeft: 5 }}
-                    >
-                      <Stack direction="column">
-                        <TextRating star={item.recommendation_sender_rating} />
-                        <Typography sx={{ marginLeft: 5 }}>
-                          {item.name}
-                        </Typography>
-                        <Typography sx={{ marginLeft: 5 }}>
-                          {item.updated_at.split("T")[0]}
-                        </Typography>
+                  {review.map((item) =>
+                    item.recommendation_sender_rating === null &&
+                    item.recommendation_sender_cmt === null ? (
+                      <></>
+                    ) : (
+                      <Stack
+                        key={item.id}
+                        direction="row"
+                        sx={{ marginBottom: 5, marginLeft: 5 }}
+                      >
+                        <Stack direction="column">
+                          <TextRating
+                            star={item.recommendation_sender_rating}
+                          />
+                          <Typography sx={{ marginLeft: 5 }}>
+                            {item.name}
+                          </Typography>
+                          <Typography sx={{ marginLeft: 5 }}>
+                            {item.updated_at.split("T")[0]}
+                          </Typography>
+                        </Stack>
+                        <Stack direction="column">
+                          <Typography>コメント</Typography>
+                          <Typography>
+                            {item.recommendation_sender_cmt}
+                          </Typography>
+                        </Stack>
                       </Stack>
-                      <Stack direction="column">
-                        <Typography>コメント</Typography>
-                        <Typography>
-                          {item.recommendation_sender_cmt}
-                        </Typography>
-                      </Stack>
-                    </Stack>
-                  ))}
+                    )
+                  )}
                 </Stack>
               ) : (
                 <></>

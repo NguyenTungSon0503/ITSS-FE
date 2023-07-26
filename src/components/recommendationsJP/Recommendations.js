@@ -213,7 +213,6 @@ const Recuit = withAuth((props) => {
                                 width="150"
                                 crop="scale"
                               />
-                              <TextRating star={review[0]?.rating} />
                             </Stack>
                           </TableCell>
 
